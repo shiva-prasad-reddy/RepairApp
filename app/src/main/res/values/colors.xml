@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#a62c23</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="window_background">#FFFFFF</color>
+    <color name="bgBottomNavigation">#f5f5f5</color>
+    <color name="tab_enable">#d50000</color>
+    <color name="tab_disable">#424242</color>
+
+</resources>
