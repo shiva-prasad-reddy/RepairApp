@@ -85,6 +85,9 @@ public class RepairFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         recyclerView.setNestedScrollingEnabled(false);
+
+
+        //view to bottomSheet get user location and pincode and give option to edit their location manually
         View bottomSheetView = getLayoutInflater().inflate(R.layout.location_bottom_sheet, null);
         dialog = new BottomSheetDialog(getContext());
         dialog.setContentView(bottomSheetView);
