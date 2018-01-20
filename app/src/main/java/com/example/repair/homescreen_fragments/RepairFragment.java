@@ -4,6 +4,7 @@ package com.example.repair.homescreen_fragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -14,6 +15,7 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -57,6 +59,11 @@ public class RepairFragment extends Fragment {
     private ConstraintLayout location;
     private  BottomSheetDialog dialog;
 
+    private TextInputEditText bottomSheetPincode;
+    private TextView currentLocation;
+
+    private static String PINCODE;
+
 
     public RepairFragment() {
         // Required empty public constructor
@@ -67,17 +74,29 @@ public class RepairFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    SharedPreferences.Editor editor;
+    SharedPreferences sharedPreferences;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.repair_fragment, container, false);
 
+
+        sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("TAPAIR",0);
+        editor = sharedPreferences.edit();
+
+
+
+
         recyclerView = view.findViewById(R.id.repair_recycler_view);
         repairItemList = new ArrayList < > ();
         mAdapter = new RepairItemAdapter(getActivity(), repairItemList);
 
         location = view.findViewById(R.id.location);
+        currentLocation = view.findViewById(R.id.current_location);
+
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 3);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -87,10 +106,26 @@ public class RepairFragment extends Fragment {
         recyclerView.setNestedScrollingEnabled(false);
 
 
-        //view to bottomSheet get user location and pincode and give option to edit their location manually
+        //see view to bottomSheet get user location and pincode and give option to edit their location manually
         View bottomSheetView = getLayoutInflater().inflate(R.layout.location_bottom_sheet, null);
+
+
         dialog = new BottomSheetDialog(getContext());
         dialog.setContentView(bottomSheetView);
+
+
+        bottomSheetPincode = bottomSheetView.findViewById(R.id.bottom_pincode);
+
+        bottomSheetView.findViewById(R.id.location_okay).setOnClickListener( v -> {
+            PINCODE = bottomSheetPincode.getText().toString();
+            currentLocation.setText(PINCODE);
+
+            editor.putString("PINCODE",PINCODE);
+            editor.commit();
+
+            dialog.dismiss();
+        });
+
 
         location.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +147,7 @@ public class RepairFragment extends Fragment {
         progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         progressDialog.show();
         progressDialog.setContentView(R.layout.progress_dialog_style);
+
 
 
         String URL = "https://repair-c8047.firebaseio.com/repairs/electrical.json";
@@ -139,6 +175,16 @@ public class RepairFragment extends Fragment {
                 // refreshing recycler view
                 mAdapter.notifyDataSetChanged();
                 progressDialog.cancel();
+
+                String pin = sharedPreferences.getString("PINCODE",null);
+                if(pin == null) {
+                    dialog.show();
+                } else {
+                    PINCODE = pin;
+                    bottomSheetPincode.setText(PINCODE);
+                    currentLocation.setText(PINCODE);
+                }
+
             }
         }, new Response.ErrorListener() {
 
@@ -203,19 +249,11 @@ public class RepairFragment extends Fragment {
                 public void onClick(View v) {
                     Intent viewShopsList = new Intent(getContext(), ShopServicesList.class);
                     viewShopsList.putExtra("product_name",v.getContentDescription());
-                    viewShopsList.putExtra("location","500044");
+                    viewShopsList.putExtra("location",PINCODE);
                     startActivity(viewShopsList);
                 }
             });
-            holder.thumbnail.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent viewShopsList = new Intent(getContext(), ShopServicesList.class);
-                    viewShopsList.putExtra("product_name",v.getContentDescription());
-                    viewShopsList.putExtra("location","500044");
-                    startActivity(viewShopsList);
-                }
-            });
+
         }
 
         @Override

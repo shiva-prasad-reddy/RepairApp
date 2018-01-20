@@ -49,6 +49,7 @@ public class ShopServicesList extends AppCompatActivity {
     private ShopServicesList.ShopsListAdapter mAdapter;
     private HashMap < String, String > favorite;
     private ProgressDialog progressDialog;
+    private String locationPincode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,7 @@ public class ShopServicesList extends AppCompatActivity {
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("product_name");
-        String location = intent.getStringExtra("location");
+        locationPincode = intent.getStringExtra("location");
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(name);
@@ -79,7 +80,7 @@ public class ShopServicesList extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(mAdapter);
-        fetchFavoriteList(name, location);
+        fetchFavoriteList(name, locationPincode);
     }
 
 
@@ -269,7 +270,7 @@ public class ShopServicesList extends AppCompatActivity {
                 Intent intent = new Intent(context, Shop.class);
                 intent.putExtra("SHOP_ID", (String) view.getTag());
                 intent.putExtra("FAVORITE",(String) view.getContentDescription());
-
+                intent.putExtra("DEVICE",locationPincode);
                 startActivity(intent);
             });
 

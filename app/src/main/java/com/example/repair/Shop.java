@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -24,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 import com.example.repair.app.AppController;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,14 +38,18 @@ public class Shop extends AppCompatActivity {
 
     private TextView time, shopName, ownerName, landmark, pincode, website, fullAddress, alternateContact, favoriteCount;
     private ImageView shopImage, personImage, call, directions, message;
-    private ListView supports;
+    private ListView supportsServices, supportsDevices;
     private ActionBar actionBar;
     private ProgressDialog progressDialog;
     private ConstraintLayout shop;
+    private String device;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
+
+
+        device = getIntent().getStringExtra("DEVICE");
 
         actionBar = getSupportActionBar();
         actionBar.setTitle("");
@@ -53,9 +59,17 @@ public class Shop extends AppCompatActivity {
 
         call = findViewById(R.id.call);
         directions = findViewById(R.id.directions);
+        directions.setOnClickListener( v -> {
+            //navigate to the specified address
+        });
         message = findViewById(R.id.Message);
+        message.setOnClickListener( v -> {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(call.getContentDescription().toString(),null,"DEVICE : "+device+"\n NUMBER : "+ FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber()+"\n",null, null);
+        });
 
-        supports = findViewById(R.id.supports);
+        supportsServices = findViewById(R.id.support_services);
+        supportsDevices = findViewById(R.id.support_devices);
 
         shop = findViewById(R.id.SHOP);
 
@@ -134,9 +148,15 @@ public class Shop extends AppCompatActivity {
                     for(int i = 0; i < array.length(); i++) {
                         services.add(array.getString(i));
                     }
+                    supportsServices.setAdapter(new ArrayAdapter<String>(Shop.this,R.layout.services_list_view_item,services));
 
-                    supports.setAdapter(new ArrayAdapter<String>(Shop.this,R.layout.services_list_view_item,services));
 
+                    ArrayList<String> devices = new ArrayList<>();
+                    array = response.getJSONArray("supportedDevices");
+                    for(int i = 0; i < array.length(); i++) {
+                        devices.add(array.getString(i));
+                    }
+                    supportsDevices.setAdapter(new ArrayAdapter<String>(Shop.this,R.layout.services_list_view_item,devices));
 
 
                     call.setContentDescription(response.getString("contactNumber"));

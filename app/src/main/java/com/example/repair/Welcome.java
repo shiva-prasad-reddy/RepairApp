@@ -25,7 +25,10 @@ public class Welcome extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
 
         auth = FirebaseAuth.getInstance();
-        Handler handler = new Handler();
+        Intent homepage = new Intent(getBaseContext(),HomeScreen.class);
+        startActivity(homepage);
+        finish();
+      /*  Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -34,7 +37,8 @@ public class Welcome extends AppCompatActivity {
                 startActivity(homepage);
                 finish();
             }
-        },1000L);
+        },1L);
+        */
 
     }
 
