@@ -33,9 +33,9 @@
 
         <activity
             android:name=".HomeScreen"
-            android:label="@string/title_activity_home_screen"></activity>
+            android:label="@string/title_activity_home_screen" />
         <activity android:name=".ShopServicesList" />
-        <activity android:name=".Shop"></activity>
+        <activity android:name=".Shop" />
     </application>
 
 </manifest>

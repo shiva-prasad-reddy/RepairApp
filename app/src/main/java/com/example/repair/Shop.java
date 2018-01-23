@@ -1,6 +1,8 @@
 package com.example.repair;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
@@ -14,6 +16,7 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -38,7 +41,9 @@ public class Shop extends AppCompatActivity {
 
     private TextView time, shopName, ownerName, landmark, pincode, website, fullAddress, alternateContact, favoriteCount;
     private ImageView shopImage, personImage, call, directions, message;
-    private ListView supportsServices, supportsDevices;
+    private Button supportsServices, supportsDevices;
+    private ArrayList<String> supportsServicesList, supportsDevicesList;
+
     private ActionBar actionBar;
     private ProgressDialog progressDialog;
     private ConstraintLayout shop;
@@ -70,6 +75,46 @@ public class Shop extends AppCompatActivity {
 
         supportsServices = findViewById(R.id.support_services);
         supportsDevices = findViewById(R.id.support_devices);
+
+        supportsDevicesList = new ArrayList<>();
+        supportsServicesList = new ArrayList<>();
+
+
+        supportsServices.setOnClickListener( v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Services");
+            String t[] = new String[supportsServicesList.size()];
+            supportsServicesList.toArray(t);
+            builder.setItems(t,null);
+
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            builder.show();
+        });
+
+        supportsDevices.setOnClickListener( v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Repairs");
+            String t[] = new String[supportsDevicesList.size()];
+            supportsDevicesList.toArray(t);
+            builder.setItems(t,null);
+
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            builder.show();
+        });
+
+
 
         shop = findViewById(R.id.SHOP);
 
@@ -142,22 +187,16 @@ public class Shop extends AppCompatActivity {
                     website.setText(response.getString("website"));
                     time.setText(response.getString("open") + " - " + response.getString("close"));
 
-
-                    ArrayList<String> services = new ArrayList<>();
                     JSONArray array = response.getJSONArray("supportedServices");
                     for(int i = 0; i < array.length(); i++) {
-                        services.add(array.getString(i));
+                        supportsServicesList.add(array.getString(i));
                     }
-                    supportsServices.setAdapter(new ArrayAdapter<String>(Shop.this,R.layout.services_list_view_item,services));
-
 
                     ArrayList<String> devices = new ArrayList<>();
                     array = response.getJSONArray("supportedDevices");
                     for(int i = 0; i < array.length(); i++) {
-                        devices.add(array.getString(i));
+                        supportsDevicesList.add(array.getString(i));
                     }
-                    supportsDevices.setAdapter(new ArrayAdapter<String>(Shop.this,R.layout.services_list_view_item,devices));
-
 
                     call.setContentDescription(response.getString("contactNumber"));
 
