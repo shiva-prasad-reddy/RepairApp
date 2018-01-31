@@ -38,6 +38,7 @@ import com.example.repair.R;
 import com.example.repair.ShopServicesList;
 import com.example.repair.app.AppController;
 import com.example.repair.pojo.RepairItem;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,7 +64,7 @@ public class RepairFragment extends Fragment {
     private TextView currentLocation;
 
     private static String PINCODE;
-
+    private ShimmerFrameLayout mShimmerViewContainer;
 
     public RepairFragment() {
         // Required empty public constructor
@@ -78,6 +79,18 @@ public class RepairFragment extends Fragment {
     SharedPreferences sharedPreferences;
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mShimmerViewContainer.startShimmerAnimation();
+    }
+
+    @Override
+    public void onPause() {
+        mShimmerViewContainer.stopShimmerAnimation();
+        super.onPause();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -89,7 +102,7 @@ public class RepairFragment extends Fragment {
 
 
 
-
+        mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
         recyclerView = view.findViewById(R.id.repair_recycler_view);
         repairItemList = new ArrayList < > ();
         mAdapter = new RepairItemAdapter(getActivity(), repairItemList);
@@ -100,7 +113,7 @@ public class RepairFragment extends Fragment {
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 3);
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(2), true));
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, 2, true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         recyclerView.setNestedScrollingEnabled(false);
@@ -141,14 +154,14 @@ public class RepairFragment extends Fragment {
 
 
     private void fetchRepairItems() {
-
+/*
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setCancelable(false);
         progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         progressDialog.show();
         progressDialog.setContentView(R.layout.progress_dialog_style);
 
-
+*/
 
         String URL = "https://repair-c8047.firebaseio.com/repairs/electrical.json";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
@@ -174,8 +187,10 @@ public class RepairFragment extends Fragment {
                 repairItemList.addAll(repairItems);
                 // refreshing recycler view
                 mAdapter.notifyDataSetChanged();
-                progressDialog.cancel();
-
+              //  progressDialog.cancel();
+                // stop animating Shimmer and hide the layout
+                mShimmerViewContainer.stopShimmerAnimation();
+                mShimmerViewContainer.setVisibility(View.GONE);
                 String pin = sharedPreferences.getString("PINCODE",null);
                 if(pin == null) {
                     dialog.show();

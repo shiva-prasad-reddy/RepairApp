@@ -39,12 +39,11 @@ import java.util.ArrayList;
 public class Shop extends AppCompatActivity {
 
 
-    private TextView time, shopName, ownerName, landmark, pincode, website, fullAddress, alternateContact, favoriteCount;
-    private ImageView shopImage, personImage, call, directions, message;
+    private TextView time, shopName, ownerName, landmark, pincode, website, fullAddress, alternateContact;
+    private ImageView shopImage, personImage;
     private Button supportsServices, supportsDevices;
     private ArrayList<String> supportsServicesList, supportsDevicesList;
 
-    private ActionBar actionBar;
     private ProgressDialog progressDialog;
     private ConstraintLayout shop;
     private String device;
@@ -56,12 +55,10 @@ public class Shop extends AppCompatActivity {
 
         device = getIntent().getStringExtra("DEVICE");
 
-        actionBar = getSupportActionBar();
-        actionBar.setTitle("");
 
         shopImage = findViewById(R.id.shop_image);
         personImage = findViewById(R.id.owner_image);
-
+/*
         call = findViewById(R.id.call);
         directions = findViewById(R.id.directions);
         directions.setOnClickListener( v -> {
@@ -72,6 +69,7 @@ public class Shop extends AppCompatActivity {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(call.getContentDescription().toString(),null,"DEVICE : "+device+"\n NUMBER : "+ FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber()+"\n",null, null);
         });
+        */
 
         supportsServices = findViewById(R.id.support_services);
         supportsDevices = findViewById(R.id.support_devices);
@@ -121,7 +119,6 @@ public class Shop extends AppCompatActivity {
 
         shopName = findViewById(R.id.shop_name);
         ownerName = findViewById(R.id.owner_name);
-        favoriteCount = findViewById(R.id.favorite_count);
 
         alternateContact = findViewById(R.id.alternate_contact);
         fullAddress = findViewById(R.id.location);
@@ -147,9 +144,7 @@ public class Shop extends AppCompatActivity {
 
         fetchShopDetails(id);
 
-
-        favoriteCount.setText(favorite);
-
+/*
         call.setOnClickListener(v -> {
             Intent callIntent = new Intent(Intent.ACTION_CALL);
             callIntent.setData(Uri.parse("tel:" + v.getContentDescription()));
@@ -159,6 +154,7 @@ public class Shop extends AppCompatActivity {
             }
             startActivity(callIntent);
         });
+        */
 
     }
 
@@ -176,7 +172,6 @@ public class Shop extends AppCompatActivity {
 
                 try {
 
-                    actionBar.setTitle(response.getString("shopName"));
                     shopName.setText(response.getString("shopName"));
                     ownerName.setText(response.getString("ownerName"));
                     landmark.setText(response.getString("landmark"));
@@ -198,7 +193,7 @@ public class Shop extends AppCompatActivity {
                         supportsDevicesList.add(array.getString(i));
                     }
 
-                    call.setContentDescription(response.getString("contactNumber"));
+                    //call.setContentDescription(response.getString("contactNumber"));
 
 
 

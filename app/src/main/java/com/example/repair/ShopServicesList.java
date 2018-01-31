@@ -4,7 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.shapes.Shape;
 import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
@@ -32,6 +35,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 import com.example.repair.app.AppController;
 import com.example.repair.pojo.ServiceShopItem;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,17 +52,15 @@ public class ShopServicesList extends AppCompatActivity {
     private ArrayList < ServiceShopItem > serviceShopItemsListGlobal;
     private ShopServicesList.ShopsListAdapter mAdapter;
     private HashMap < String, String > favorite;
-    private ProgressDialog progressDialog;
     private String locationPincode;
+    private ShimmerFrameLayout mShimmerViewContainer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_services_list);
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setCancelable(false);
-        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
 
         Intent intent = getIntent();
@@ -73,6 +75,7 @@ public class ShopServicesList extends AppCompatActivity {
         serviceShopItemsListGlobal = new ArrayList < > ();
 
         recyclerView = findViewById(R.id.repair_shop_services_list);
+        mShimmerViewContainer = findViewById(R.id.shimmer_view_container);
 
         mAdapter = new ShopsListAdapter(this, serviceShopItemsListGlobal);
 
@@ -84,11 +87,20 @@ public class ShopServicesList extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mShimmerViewContainer.startShimmerAnimation();
+    }
+
+    @Override
+    public void onPause() {
+        mShimmerViewContainer.stopShimmerAnimation();
+        super.onPause();
+    }
+
+
     private void fetchFavoriteList(final String name, final String location) {
-
-        progressDialog.show();
-        progressDialog.setContentView(R.layout.progress_dialog_style);
-
 
         String URL = "https://repair-c8047.firebaseio.com/favorite/" + location + ".json";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener < JSONObject > () {
@@ -157,7 +169,11 @@ public class ShopServicesList extends AppCompatActivity {
                 serviceShopItemsListGlobal.clear();
                 serviceShopItemsListGlobal.addAll(shopsItems);
                 mAdapter.notifyDataSetChanged();
-                progressDialog.cancel();
+
+
+                // stop animating Shimmer and hide the layout
+                mShimmerViewContainer.stopShimmerAnimation();
+                mShimmerViewContainer.setVisibility(View.GONE);
             }
         }, new Response.ErrorListener() {
 
@@ -177,33 +193,23 @@ public class ShopServicesList extends AppCompatActivity {
 
         public class MyShopViewHolder extends RecyclerView.ViewHolder {
 
-            public ImageView person_image, services, call, next;
+            public ImageView person_image, call, next;
             public TextView shop_name, shop_location, favorite_count;
-            public CardView shopCard;
             public ListView servicesList;
-            public ConstraintLayout lowerLayout;
-            public LinearLayout lower;
-
+            public LinearLayout services_list_layout;
 
             public MyShopViewHolder(final View itemView) {
                 super(itemView);
 
-                lowerLayout = itemView.findViewById(R.id.lower_layout);
-                //imageviews
 
                 person_image = itemView.findViewById(R.id.person_image);
-                services = itemView.findViewById(R.id.services);
                 call = itemView.findViewById(R.id.contacts_);
                 next = itemView.findViewById(R.id.next);
                 //textviews
                 shop_name = itemView.findViewById(R.id.shop_name);
                 shop_location = itemView.findViewById(R.id.shop_location);
                 favorite_count = itemView.findViewById(R.id.favorite_count);
-
-                shopCard = itemView.findViewById(R.id.shop_card);
                 servicesList = itemView.findViewById(R.id.services_list);
-
-                lower = itemView.findViewById(R.id.lower);
             }
         }
 
@@ -228,30 +234,12 @@ public class ShopServicesList extends AppCompatActivity {
             Glide.with(context).load(serviceShopItem.getPersonImage()).into(holder.person_image);
             //handle services image rotation
             holder.call.setContentDescription(serviceShopItem.getCall());
-
-
-
-
             holder.next.setTag(serviceShopItem.getShopId());
             holder.next.setContentDescription(serviceShopItem.getFavoriteCount());
 
 
 
-            holder.shopCard.setOnClickListener((view) -> {
-
-                //TransitionManager.beginDelayedTransition(holder.lower);
-                if(holder.lowerLayout.getVisibility() == View.VISIBLE) {
-                    holder.lowerLayout.setVisibility(View.GONE);
-                    holder.services.setRotation(0);
-                }
-                else {
-                    holder.lowerLayout.setVisibility(View.VISIBLE);
-                    holder.services.setRotation(180);
-                }
-                });
-
-
-            holder.servicesList.setAdapter(new ArrayAdapter<String>(context,R.layout.services_list_view_item,serviceShopItem.getSupportedServices()));
+           holder.servicesList.setAdapter(new ArrayAdapter<>(context,R.layout.services_list_view_item,serviceShopItem.getSupportedServices()));
 
             holder.call.setOnClickListener(new View.OnClickListener() {
                 @Override
