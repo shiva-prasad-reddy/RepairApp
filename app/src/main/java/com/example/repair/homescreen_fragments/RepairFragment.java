@@ -1,41 +1,26 @@
 package com.example.repair.homescreen_fragments;
 
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.bumptech.glide.Glide;
 import com.example.repair.R;
-import com.example.repair.ShopServicesList;
 import com.example.repair.app.AppController;
 import com.example.repair.pojo.RepairItem;
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -54,19 +39,29 @@ import java.util.List;
 public class RepairFragment extends Fragment {
 
 
-    private RecyclerView recyclerView;
-    private List<RepairItem> repairItemList;
-    private RepairItemAdapter mAdapter;
+    private RecyclerView appliances_recyclerView;
+    private List<RepairItem> appliances_repairItemList;
+    private RepairItemAdapter appliances_mAdapter;
+
+
+
+    private RecyclerView computer_recyclerView;
+    private List<RepairItem> computer_repairItemList;
+    private RepairItemAdapter computer_mAdapter;
+
+
+
     private ConstraintLayout location;
     private  BottomSheetDialog dialog;
-
     private TextInputEditText bottomSheetPincode;
     private TextView currentLocation;
 
-    private Pincode PINCODE;
+    private static final Pincode PINCODE = new Pincode();
     private ShimmerFrameLayout mShimmerViewContainer;
-    SharedPreferences.Editor editor;
-    SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private SharedPreferences sharedPreferences;
+
+    private LinearLayout content;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,27 +91,31 @@ public class RepairFragment extends Fragment {
         editor = sharedPreferences.edit();
 
 
-
-
-
+        content = view.findViewById(R.id.content);
         mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
-        recyclerView = view.findViewById(R.id.repair_recycler_view);
-        repairItemList = new ArrayList < > ();
-
-        PINCODE = new Pincode();
-
-        mAdapter = new RepairItemAdapter(getActivity(), repairItemList, PINCODE);
-
-        location = view.findViewById(R.id.location);
+        location = view.findViewById(R.id.SHOP_ADDRESS);
         currentLocation = view.findViewById(R.id.current_location);
 
 
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 3);
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, 2, true));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.setNestedScrollingEnabled(false);
+
+        appliances_recyclerView = view.findViewById(R.id.appliances_recycler_view);
+        appliances_repairItemList = new ArrayList < > ();
+        appliances_mAdapter = new RepairItemAdapter(getActivity(), appliances_repairItemList, PINCODE, "APPLIANCES");
+        appliances_recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        appliances_recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, 2, true));
+        appliances_recyclerView.setItemAnimator(new DefaultItemAnimator());
+        appliances_recyclerView.setAdapter(appliances_mAdapter);
+        appliances_recyclerView.setNestedScrollingEnabled(false);
+
+        computer_recyclerView = view.findViewById(R.id.computer_repair_recycler_view);
+        computer_repairItemList = new ArrayList < > ();
+        computer_mAdapter = new RepairItemAdapter(getActivity(), computer_repairItemList, PINCODE, "COMPUTER_REPAIR");
+        computer_recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        computer_recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, 2, true));
+        computer_recyclerView.setItemAnimator(new DefaultItemAnimator());
+        computer_recyclerView.setAdapter(computer_mAdapter);
+        computer_recyclerView.setNestedScrollingEnabled(false);
+
 
         View bottomSheetView = getLayoutInflater().inflate(R.layout.location_bottom_sheet, null);
         dialog = new BottomSheetDialog(getContext());
@@ -132,7 +131,6 @@ public class RepairFragment extends Fragment {
 
 
         location.setOnClickListener(v -> dialog.show());
-
         fetchRepairItems();
         return view;
     }
@@ -141,31 +139,83 @@ public class RepairFragment extends Fragment {
 
     private void fetchRepairItems() {
 
-        String URL = "https://repair-c8047.firebaseio.com/repairs/electrical.json";
+        String URL = "https://repair-c8047.firebaseio.com/REPAIR_APP.json";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
                 URL, null, new Response.Listener < JSONObject > () {
 
             @Override
             public void onResponse(JSONObject response) {
-                List < RepairItem > repairItems = new ArrayList < > ();
-                Iterator < String > iterator = response.keys();
-                while (iterator.hasNext()) {
-                    String key = iterator.next();
-                    try {
-                        JSONObject object = response.getJSONObject(key);
-                        RepairItem item = new RepairItem();
-                        item.setTitle(object.get("name").toString());
-                        item.setImage(object.get("image").toString());
-                        repairItems.add(item);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+
+                List < RepairItem > appliances_repairItems = new ArrayList < > ();
+                List < RepairItem > computer_repairItems = new ArrayList < > ();
+
+                Iterator<String> itr = response.keys();
+                while(itr.hasNext()) {
+                    String type = itr.next();
+                    switch(type) {
+                        case "APPLIANCES":
+                            try {
+                                JSONObject obj = response.getJSONObject(type);
+                                Iterator < String > iterator = obj.keys();
+                                while (iterator.hasNext()) {
+                                    String key = iterator.next();
+                                    try {
+                                        JSONObject object = obj.getJSONObject(key);
+                                        RepairItem item = new RepairItem();
+                                        item.setTitle(object.get("name").toString());
+                                        item.setImage(object.get("image").toString());
+                                        appliances_repairItems.add(item);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            break;
+                        case "COMPUTER_REPAIR":
+                            try {
+                                JSONObject obj = response.getJSONObject(type);
+                                Iterator < String > iterator = obj.keys();
+                                while (iterator.hasNext()) {
+                                    String key = iterator.next();
+                                    try {
+                                        JSONObject object = obj.getJSONObject(key);
+                                        RepairItem item = new RepairItem();
+                                        item.setTitle(object.get("name").toString());
+                                        item.setImage(object.get("image").toString());
+                                        computer_repairItems.add(item);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            break;
                     }
                 }
-                repairItemList.clear();
-                repairItemList.addAll(repairItems);
-                mAdapter.notifyDataSetChanged();
+
+
+
+
+
+
+                appliances_repairItemList.clear();
+                appliances_repairItemList.addAll(appliances_repairItems);
+                appliances_mAdapter.notifyDataSetChanged();
+
+
+                computer_repairItemList.clear();
+                computer_repairItemList.addAll(computer_repairItems);
+                computer_mAdapter.notifyDataSetChanged();
+
                 mShimmerViewContainer.stopShimmerAnimation();
                 mShimmerViewContainer.setVisibility(View.GONE);
+                content.setVisibility(View.VISIBLE);
                 String pin = sharedPreferences.getString("PINCODE",null);
                 if(pin == null) {
                     dialog.show();

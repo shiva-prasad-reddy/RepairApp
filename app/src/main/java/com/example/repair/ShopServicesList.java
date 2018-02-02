@@ -1,21 +1,14 @@
 package com.example.repair;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.shapes.Shape;
 import android.net.Uri;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,7 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 import com.example.repair.app.AppController;
-import com.example.repair.pojo.ServiceShopItem;
+import com.example.repair.pojo.ShopDetails;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONArray;
@@ -42,48 +35,43 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 
 public class ShopServicesList extends AppCompatActivity {
 
 
     private RecyclerView recyclerView;
-    private ArrayList < ServiceShopItem > serviceShopItemsListGlobal;
+    private static final ArrayList<ShopDetails> shopsList = new ArrayList<>();
     private ShopServicesList.ShopsListAdapter mAdapter;
-    private HashMap < String, String > favorite;
-    private String locationPincode;
+
     private ShimmerFrameLayout mShimmerViewContainer;
+    private String PINCODE, TYPE, PRODUCT_NAME;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_services_list);
-
+        mShimmerViewContainer = findViewById(R.id.shimmer_view_container);
 
 
         Intent intent = getIntent();
-        String name = intent.getStringExtra("product_name");
-        locationPincode = intent.getStringExtra("location");
+        PINCODE = intent.getStringExtra("PINCODE");
+        TYPE = intent.getStringExtra("TYPE");
+        PRODUCT_NAME = intent.getStringExtra("PRODUCT_NAME");
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(name);
+        actionBar.setTitle(PRODUCT_NAME);
 
-        favorite = new HashMap < String, String > ();
-
-        serviceShopItemsListGlobal = new ArrayList < > ();
 
         recyclerView = findViewById(R.id.repair_shop_services_list);
-        mShimmerViewContainer = findViewById(R.id.shimmer_view_container);
-
-        mAdapter = new ShopsListAdapter(this, serviceShopItemsListGlobal);
-
+        mAdapter = new ShopsListAdapter(this, shopsList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(mAdapter);
-        fetchFavoriteList(name, locationPincode);
+
+        fetchRepairServiceShopsItems();
     }
 
 
@@ -99,87 +87,77 @@ public class ShopServicesList extends AppCompatActivity {
         super.onPause();
     }
 
-
-    private void fetchFavoriteList(final String name, final String location) {
-
-        String URL = "https://repair-c8047.firebaseio.com/favorite/" + location + ".json";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener < JSONObject > () {
-
-            @Override
-            public void onResponse(JSONObject response) {
-                Iterator < String > iterator = response.keys();
-                while (iterator.hasNext()) {
-                    String key = iterator.next();
-                    try {
-                        favorite.put(key, response.getString(key));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                fetchRepairServiceShopsItems(name, location);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getBaseContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        AppController.getInstance().addToRequestQueue(request);
-    }
-
-    public void fetchRepairServiceShopsItems(String name, String location) {
+    public void fetchRepairServiceShopsItems() {
 
 
-        String URL = "https://repair-c8047.firebaseio.com/repair_shops/" + name.toUpperCase() + "/" + location + ".json";
+        String URL = "https://repair-c8047.firebaseio.com/SHOPS/" + PINCODE + "/" + TYPE + ".json";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL, null, new Response.Listener < JSONObject > () {
 
             @Override
             public void onResponse(JSONObject response) {
 
-                final ArrayList < ServiceShopItem > shopsItems = new ArrayList < > ();
+                ArrayList<ShopDetails> list = new ArrayList<>();
                 Iterator < String > iterator = response.keys();
                 while (iterator.hasNext()) {
+
                     String key = iterator.next();
                     try {
                         JSONObject object = response.getJSONObject(key);
-
-                        ServiceShopItem item = new ServiceShopItem();
-                        item.setShopId(key);
-                        item.setCall(object.getString("call"));
-                        item.setFavoriteCount(favorite.get(item.getShopId()));
-                        item.setPersonImage(object.getString("personImage"));
-                        item.setShopLocation(object.getString("shopLocation"));
-                        item.setShopName(object.getString("shopName"));
-
-                        ArrayList<String> services = new ArrayList<>();
-                        JSONArray array = object.getJSONArray("supportedServices");
+                        ArrayList<String> DEVICES = new ArrayList<>();
+                        JSONArray array = object.getJSONArray("DEVICES");
                         for(int i = 0; i < array.length(); i++) {
-                            services.add(array.getString(i));
+                            DEVICES.add(array.getString(i));
                         }
-                        item.setSupportedServices(services);
+                        if(DEVICES.contains(PRODUCT_NAME)) {
+                            ShopDetails item = new ShopDetails();
+                            item.SHOP_ID = key;
+                            item.SHOP_NAME = object.getString("SHOP_NAME");
+                            item.OWNER_NAME = object.getString("OWNER_NAME");
+                            item.OWNER_IMAGE = object.getString("OWNER_IMAGE");
+                            item.CONTACT_NUMBER = object.getString("CONTACT_NUMBER");
+                            item.AUTHORISED = object.getString("AUTHORISED").equals("YES") ? true : false;
+                            if(item.AUTHORISED) {
+                                ArrayList<String> services = new ArrayList<>();
+                                JSONArray ar = object.getJSONArray("SERVICE_BRANDS");
+                                for(int i = 0; i < ar.length(); i++) {
+                                    services.add(ar.getString(i));
+                                }
+                                item.SERVICE_BRANDS.addAll(services);
+                            }
 
-                        shopsItems.add(item);
+
+                            //SHOP_ADDRESS, PINCODE, HOURS_OF_OPERATION, MAIL, WEBSITE, SHOP_IMAGE, DEVICES
+                            item.SHOP_ADDRESS = object.getString("SHOP_ADDRESS");
+                            item.PINCODE = object.getString("PINCODE");
+                            item.HOURS_OF_OPERATION = object.getString("HOURS_OF_OPERATION");
+                            item.MAIL = object.getString("MAIL");
+                            item.WEBSITE = object.getString("WEBSITE");
+                            item.SHOP_IMAGE = object.getString("SHOP_IMAGE");
+                            item.DEVICES.addAll(DEVICES);
+
+
+
+
+                            list.add(item);
+                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
-                serviceShopItemsListGlobal.clear();
-                serviceShopItemsListGlobal.addAll(shopsItems);
+                shopsList.clear();
+                shopsList.addAll(list);
                 mAdapter.notifyDataSetChanged();
-
-
                 // stop animating Shimmer and hide the layout
                 mShimmerViewContainer.stopShimmerAnimation();
                 mShimmerViewContainer.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
             }
         }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getBaseContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ShopServicesList.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -189,33 +167,33 @@ public class ShopServicesList extends AppCompatActivity {
     public class ShopsListAdapter extends RecyclerView.Adapter < ShopsListAdapter.MyShopViewHolder > {
 
         private Context context;
-        private ArrayList < ServiceShopItem > serviceShopItemsList;
+        private ArrayList <ShopDetails> shopItemsList;
 
         public class MyShopViewHolder extends RecyclerView.ViewHolder {
 
-            public ImageView person_image, call, next;
-            public TextView shop_name, shop_location, favorite_count;
-            public ListView servicesList;
-            public LinearLayout services_list_layout;
+            public ImageView owner_image, call, next, authorised;
+            public TextView shop_name, owner_name, contact_number;
+            public ListView service_brands;
+            public LinearLayout service_brands_layout;
 
-            public MyShopViewHolder(final View itemView) {
+            public MyShopViewHolder(View itemView) {
                 super(itemView);
-
-
-                person_image = itemView.findViewById(R.id.person_image);
-                call = itemView.findViewById(R.id.contacts_);
+                owner_image = itemView.findViewById(R.id.OWNER_IMAGE);
+                authorised = itemView.findViewById(R.id.authorised);
+                call = itemView.findViewById(R.id.CALL);
                 next = itemView.findViewById(R.id.next);
-                //textviews
-                shop_name = itemView.findViewById(R.id.shop_name);
-                shop_location = itemView.findViewById(R.id.shop_location);
-                favorite_count = itemView.findViewById(R.id.favorite_count);
-                servicesList = itemView.findViewById(R.id.services_list);
+                shop_name = itemView.findViewById(R.id.SHOP_NAME);
+                owner_name = itemView.findViewById(R.id.OWNER_NAME);
+                contact_number = itemView.findViewById(R.id.contact_number);
+                service_brands = itemView.findViewById(R.id.service_brands);
+                service_brands_layout = itemView.findViewById(R.id.service_brands_layout);
             }
         }
 
-        public ShopsListAdapter(Context context, ArrayList < ServiceShopItem > serviceShopsList) {
+        public ShopsListAdapter(Context context, ArrayList <ShopDetails> shopsList) {
             this.context = context;
-            this.serviceShopItemsList = serviceShopsList;
+            this.shopItemsList = shopsList;
+
         }
 
         @Override
@@ -226,20 +204,26 @@ public class ShopServicesList extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(MyShopViewHolder holder, final int position) {
-            final ServiceShopItem serviceShopItem = serviceShopItemsList.get(position);
-            holder.shop_name.setText(serviceShopItem.getShopName());
-            holder.favorite_count.setText(serviceShopItem.getFavoriteCount());
-            holder.shop_location.setText(serviceShopItem.getShopLocation());
+            final ShopDetails shopDetails = shopItemsList.get(position);
 
-            Glide.with(context).load(serviceShopItem.getPersonImage()).into(holder.person_image);
-            //handle services image rotation
-            holder.call.setContentDescription(serviceShopItem.getCall());
-            holder.next.setTag(serviceShopItem.getShopId());
-            holder.next.setContentDescription(serviceShopItem.getFavoriteCount());
+            Glide.with(context).load(shopDetails.OWNER_IMAGE).into(holder.owner_image);
+            holder.call.setContentDescription(shopDetails.CONTACT_NUMBER);
+            holder.next.setTag(shopDetails);
 
+            holder.shop_name.setText(shopDetails.SHOP_NAME);
+            holder.owner_name.setText(shopDetails.OWNER_NAME);
+            holder.contact_number.setText(shopDetails.CONTACT_NUMBER);
 
+            if(!shopDetails.AUTHORISED) {
+                holder.authorised.setVisibility(View.GONE);
+            }
 
-           holder.servicesList.setAdapter(new ArrayAdapter<>(context,R.layout.services_list_view_item,serviceShopItem.getSupportedServices()));
+            if(shopDetails.SERVICE_BRANDS.size() > 0) {
+                holder.service_brands.setAdapter(new ArrayAdapter<>(context,R.layout.services_list_view_item, shopDetails.SERVICE_BRANDS));
+            } else {
+                holder.service_brands_layout.setVisibility(View.GONE);
+            }
+
 
             holder.call.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -256,17 +240,18 @@ public class ShopServicesList extends AppCompatActivity {
 
             holder.next.setOnClickListener((view) -> {
                 Intent intent = new Intent(context, Shop.class);
-                intent.putExtra("SHOP_ID", (String) view.getTag());
-                intent.putExtra("FAVORITE",(String) view.getContentDescription());
-                intent.putExtra("DEVICE",locationPincode);
+                intent.putExtra("SHOP", (ShopDetails)view.getTag());
+                intent.putExtra("PRODUCT_NAME", PRODUCT_NAME);
+                intent.putExtra("TYPE", TYPE);
                 startActivity(intent);
             });
+
 
         }
 
         @Override
         public int getItemCount() {
-            return serviceShopItemsList.size();
+            return shopItemsList.size();
         }
     }
 

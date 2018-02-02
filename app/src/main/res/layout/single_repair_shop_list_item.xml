@@ -39,7 +39,7 @@
 
 
                     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/person_image"
+                        android:id="@+id/OWNER_IMAGE"
 
                         android:layout_width="50dp"
                         android:layout_height="50dp"
@@ -54,51 +54,42 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
 
-
                     <TextView
-                        android:id="@+id/shop_name"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/SHOP_NAME"
+                        android:layout_width="0dp"
                         android:layout_height="18dp"
+                        android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="4dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
                         android:text="TextView"
                         android:textSize="16sp"
-                        app:layout_constraintStart_toEndOf="@+id/person_image"
-                        app:layout_constraintTop_toTopOf="@+id/person_image" />
+                        app:layout_constraintEnd_toStartOf="@+id/authorised"
+                        app:layout_constraintStart_toEndOf="@+id/OWNER_IMAGE"
+                        app:layout_constraintTop_toTopOf="@+id/OWNER_IMAGE" />
 
-
-                    <ImageView
-                        android:id="@+id/faorite_image"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginEnd="50dp"
-                        android:layout_marginTop="12dp"
-                        android:scaleType="fitCenter"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_favorite_black_24dp" />
 
                     <TextView
-                        android:id="@+id/favorite_count"
+                        android:id="@+id/OWNER_NAME"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1200"
-                        android:textSize="10sp"
-                        app:layout_constraintEnd_toEndOf="@+id/faorite_image"
-                        app:layout_constraintStart_toStartOf="@+id/faorite_image"
-                        app:layout_constraintTop_toBottomOf="@+id/faorite_image"
-                        tools:layout_editor_absoluteX="291dp"
-                        tools:layout_editor_absoluteY="70dp" />
-
-                    <TextView
-                        android:id="@+id/shop_location"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
+                        android:layout_marginTop="4dp"
                         android:text="TextView"
                         android:textSize="10sp"
-                        app:layout_constraintStart_toStartOf="@+id/shop_name"
-                        app:layout_constraintTop_toBottomOf="@+id/shop_name" />
+                        app:layout_constraintStart_toStartOf="@+id/SHOP_NAME"
+                        app:layout_constraintTop_toBottomOf="@+id/SHOP_NAME" />
+
+                    <TextView
+                        android:id="@+id/contact_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="TextView"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/OWNER_NAME"
+                        app:layout_constraintStart_toEndOf="@+id/OWNER_NAME"
+                        app:layout_constraintTop_toTopOf="@+id/OWNER_NAME" />
 
                     <android.support.v7.widget.AppCompatImageView
                         android:id="@+id/headerIndicator"
@@ -106,11 +97,28 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:layout_marginBottom="8dp"
                         android:layout_marginEnd="16dp"
+                        android:layout_marginTop="8dp"
                         android:adjustViewBounds="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/faorite_image"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
+
+                    <ImageView
+                        android:id="@+id/authorised"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="8dp"
+                        android:elevation="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/headerIndicator"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_check_circle_green_24dp" />
+
 
                 </android.support.constraint.ConstraintLayout>
             </LinearLayout>
@@ -134,7 +142,7 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:id="@+id/services_list_layout"
+                    android:id="@+id/service_brands_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -144,7 +152,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.example.repair.pojo.MyListView
-                        android:id="@+id/services_list"
+                        android:id="@+id/service_brands"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"></com.example.repair.pojo.MyListView>
@@ -152,7 +160,7 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/contacts_"
+                    android:id="@+id/CALL"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginBottom="4dp"
@@ -160,18 +168,18 @@
                     android:layout_marginTop="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/next"
-                    app:layout_constraintTop_toBottomOf="@+id/services_list_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/service_brands_layout"
                     app:srcCompat="@drawable/blue_call_image" />
 
                 <ImageView
                     android:id="@+id/next"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginTop="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/contacts_"
+                    app:layout_constraintBottom_toBottomOf="@+id/CALL"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/services_list_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/service_brands_layout"
                     app:srcCompat="@drawable/ic_arrow_forward_black_24dp" />
             </android.support.constraint.ConstraintLayout>
 

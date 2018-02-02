@@ -22,11 +22,11 @@
             android:visibility="visible">
 
             <ImageView
-                android:id="@+id/shop_image"
+                android:id="@+id/SHOP_IMAGE"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:adjustViewBounds="false"
-                android:alpha="0.7"
+                android:alpha="0.9"
                 android:cropToPadding="false"
                 android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -36,14 +36,14 @@
 
 
             <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/owner_image"
+                android:id="@+id/OWNER_IMAGE"
 
                 android:layout_width="100dp"
                 android:layout_height="100dp"
 
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="110dp"
                 android:elevation="5dp"
                 android:src="@android:drawable/screen_background_light_transparent"
                 app:civ_border_color="#FF000000"
@@ -54,16 +54,16 @@
                 app:srcCompat="@android:drawable/screen_background_light_transparent" />
 
             <TextView
-                android:id="@+id/owner_name"
+                android:id="@+id/OWNER_NAME"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:elevation="5dp"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/owner_image"
-                app:layout_constraintStart_toStartOf="@+id/owner_image"
-                app:layout_constraintTop_toBottomOf="@+id/owner_image" />
+                app:layout_constraintEnd_toEndOf="@+id/OWNER_IMAGE"
+                app:layout_constraintStart_toStartOf="@+id/OWNER_IMAGE"
+                app:layout_constraintTop_toBottomOf="@+id/OWNER_IMAGE" />
 
 
             <android.support.v7.widget.CardView
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="3dp"
                 android:layout_marginStart="3dp"
-                android:layout_marginTop="150dp"
+                android:layout_marginTop="160dp"
                 android:elevation="2dp"
                 app:cardCornerRadius="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +85,7 @@
 
 
                     <TextView
-                        android:id="@+id/shop_name"
+                        android:id="@+id/SHOP_NAME"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
@@ -113,20 +113,11 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/shop_name">
+                        app:layout_constraintTop_toBottomOf="@+id/SHOP_NAME">
 
 
                         <TextView
-                            android:id="@+id/landmark"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:textSize="10sp"
-                            tools:layout_editor_absoluteX="85dp"
-                            tools:layout_editor_absoluteY="93dp" />
-
-                        <TextView
-                            android:id="@+id/pincode"
+                            android:id="@+id/PINCODE"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
@@ -135,7 +126,7 @@
                             tools:layout_editor_absoluteY="109dp" />
 
                         <TextView
-                            android:id="@+id/hours_of_operation"
+                            android:id="@+id/HOURS_OF_OPERATION"
                             android:layout_width="wrap_content"
                             android:layout_height="15dp"
                             android:layout_marginLeft="8dp"
@@ -207,7 +198,7 @@
                         app:srcCompat="@drawable/ic_web_black_24dp" />
 
                     <TextView
-                        android:id="@+id/alternate_contact"
+                        android:id="@+id/CONTACT_NUMBER"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -218,7 +209,7 @@
                         app:layout_constraintTop_toTopOf="@+id/imageView5" />
 
                     <TextView
-                        android:id="@+id/location"
+                        android:id="@+id/SHOP_ADDRESS"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -229,7 +220,7 @@
                         app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
                     <TextView
-                        android:id="@+id/mail"
+                        android:id="@+id/MAIL"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -241,7 +232,7 @@
                         app:layout_constraintTop_toTopOf="@+id/imageView4" />
 
                     <TextView
-                        android:id="@+id/website"
+                        android:id="@+id/WEBSITE"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -276,7 +267,7 @@
 
 
                     <Button
-                        android:id="@+id/support_services"
+                        android:id="@+id/SERVICE_BRANDS"
                         style="@android:style/Widget.Material.Light.Button.Borderless"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -284,19 +275,19 @@
                         android:textAllCaps="false"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/support_devices"
-                        app:layout_constraintTop_toTopOf="@+id/support_devices" />
+                        app:layout_constraintStart_toEndOf="@+id/DEVICES"
+                        app:layout_constraintTop_toTopOf="@+id/DEVICES" />
 
 
                     <Button
-                        android:id="@+id/support_devices"
+                        android:id="@+id/DEVICES"
                         style="@android:style/Widget.Material.Light.Button.Borderless"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Repairs"
                         android:textAllCaps="false"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/support_services"
+                        app:layout_constraintEnd_toStartOf="@+id/SERVICE_BRANDS"
                         app:layout_constraintStart_toStartOf="parent" />
 
                 </android.support.constraint.ConstraintLayout>
@@ -320,7 +311,7 @@
         >
 
         <Button
-            android:id="@+id/call"
+            android:id="@+id/CALL"
             style="@android:style/Widget.Material.Light.Button.Borderless"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -331,12 +322,12 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/book"
+            app:layout_constraintStart_toEndOf="@+id/BOOK"
 
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/book"
+            android:id="@+id/BOOK"
             style="@android:style/Widget.Material.Light.Button.Borderless"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -347,7 +338,7 @@
             android:textColor="@color/cardview_light_background"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/call"
+            app:layout_constraintEnd_toStartOf="@+id/CALL"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

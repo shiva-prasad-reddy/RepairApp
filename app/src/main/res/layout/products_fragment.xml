@@ -13,7 +13,7 @@ tools:context="com.example.repair.homescreen_fragments.ProductsFragment">
         android:id="@+id/products_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/location"
+        android:layout_below="@+id/SHOP_ADDRESS"
         android:clipToPadding="false"
         android:scrollbars="vertical" />
 

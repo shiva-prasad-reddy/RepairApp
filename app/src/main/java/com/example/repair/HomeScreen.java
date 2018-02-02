@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.example.repair.homescreen_fragments.BottomNavigationBehavior;
 import com.example.repair.homescreen_fragments.CustomPagerAdapter;
@@ -28,6 +30,7 @@ public class HomeScreen extends AppCompatActivity {
         fragmentPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(fragmentPagerAdapter);
         viewPager.setCurrentItem(0);
+
 
         navigation = findViewById(R.id.navigation);
         mOnNavigationItemSelectedListener = item -> {
