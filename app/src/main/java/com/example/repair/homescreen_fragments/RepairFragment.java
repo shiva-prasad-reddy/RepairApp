@@ -87,7 +87,7 @@ public class RepairFragment extends Fragment {
         View view = inflater.inflate(R.layout.repair_fragment, container, false);
 
 
-        sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("TAPAIR",0);
+        sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("REPAIRAPP",0);
         editor = sharedPreferences.edit();
 
 
@@ -121,7 +121,7 @@ public class RepairFragment extends Fragment {
         dialog = new BottomSheetDialog(getContext());
         dialog.setContentView(bottomSheetView);
         bottomSheetPincode = bottomSheetView.findViewById(R.id.bottom_pincode);
-        bottomSheetView.findViewById(R.id.location_okay).setOnClickListener( v -> {
+        bottomSheetView.findViewById(R.id.done).setOnClickListener(v -> {
             PINCODE.setPINCODE(bottomSheetPincode.getText().toString());
             currentLocation.setText(PINCODE.getPINCODE());
             editor.putString("PINCODE",PINCODE.getPINCODE());

@@ -1,36 +1,31 @@
 package com.example.repair;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
-import com.example.repair.app.AppController;
+import com.example.repair.pojo.Complaint;
 import com.example.repair.pojo.ShopDetails;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Shop extends AppCompatActivity {
 
@@ -38,10 +33,13 @@ public class Shop extends AppCompatActivity {
     private TextView shopName, shopAddress, pincode, hoursOfOperation, mail, website, ownerName, contactNumber;
     private ImageView shopImage, ownerImage;
     private Button serviceBrands, devices, call, book;
-
-
     private ShopDetails shopDetails;
     private String PRODUCT_NAME, TYPE;
+    private BottomSheetDialog dialog;
+
+    private TextInputEditText problemDescription;
+    private Button done;
+    private TextView product_name, date, service_type, number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +127,42 @@ public class Shop extends AppCompatActivity {
             }
             startActivity(callIntent);
         });
+
+
+        View bottomSheetView = getLayoutInflater().inflate(R.layout.location_book_bottom_sheet, null);
+        dialog = new BottomSheetDialog(this);
+        dialog.setContentView(bottomSheetView);
+
+
+
+        product_name = bottomSheetView.findViewById(R.id.product_name);
+        date = bottomSheetView.findViewById(R.id.date);
+        service_type = bottomSheetView.findViewById(R.id.service_type);
+        number = bottomSheetView.findViewById(R.id.number);
+        problemDescription = bottomSheetView.findViewById(R.id.problem_description);
+
+        product_name.setText(PRODUCT_NAME);
+        service_type.setText(TYPE);
+        number.setText(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
+        date.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
+
+        bottomSheetView.findViewById(R.id.done).setOnClickListener( v -> {
+            String problem = TextUtils.isEmpty(problemDescription.getText().toString()) ? "UNKNOWN" : problemDescription.getText().toString();
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("COMPLAINT");
+            String id = databaseReference.push().getKey();
+            Complaint complaint = new Complaint();
+            complaint.PRODUCT_NAME = PRODUCT_NAME;
+            complaint.PROBLEM_DESCRIPTION = problem;
+            complaint.DATE = date.getText().toString();
+            complaint.TYPE = TYPE;
+            complaint.CONTACT_NUMBER = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
+            complaint.PINCODE = getApplicationContext().getSharedPreferences("REPAIRAPP",0).getString("PINCODE","000000");
+            databaseReference.child(shopDetails.SHOP_ID).child(id).setValue(complaint);
+            problemDescription.setText("");
+            dialog.dismiss();
+            Snackbar.make(book,"Service Booked.",Snackbar.LENGTH_LONG).show();
+        });
+        book.setOnClickListener(v -> dialog.show());
 
 
     }

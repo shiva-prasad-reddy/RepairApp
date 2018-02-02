@@ -26,21 +26,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:adjustViewBounds="false"
-                android:alpha="0.9"
                 android:cropToPadding="false"
                 android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@android:drawable/screen_background_light_transparent" />
+            <!-- android:alpha="0.9" -->
 
-
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/OWNER_IMAGE"
-
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="110dp"
@@ -160,20 +158,22 @@
 
                     <ImageView
                         android:id="@+id/imageView2"
-                        android:layout_width="25dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="25dp"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintStart_toStartOf="@+id/imageView5"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/SHOP_ADDRESS"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/SHOP_ADDRESS"
                         app:srcCompat="@drawable/ic_my_location_black_24dp" />
 
                     <ImageView
                         android:id="@+id/imageView4"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
-                        app:layout_constraintStart_toStartOf="@+id/imageView2"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/SHOP_ADDRESS"
                         app:srcCompat="@drawable/ic_email_black_24dp" />
 
                     <ImageView
@@ -210,14 +210,17 @@
 
                     <TextView
                         android:id="@+id/SHOP_ADDRESS"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
                         android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="SHOP FULL ADDRESS"
                         android:textAppearance="@android:style/TextAppearance.Material.Large"
                         android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView2"
-                        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+                        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
                     <TextView
                         android:id="@+id/MAIL"

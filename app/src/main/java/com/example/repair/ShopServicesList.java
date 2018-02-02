@@ -55,6 +55,8 @@ public class ShopServicesList extends AppCompatActivity {
         mShimmerViewContainer = findViewById(R.id.shimmer_view_container);
 
 
+
+
         Intent intent = getIntent();
         PINCODE = intent.getStringExtra("PINCODE");
         TYPE = intent.getStringExtra("TYPE");
@@ -62,7 +64,8 @@ public class ShopServicesList extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(PRODUCT_NAME);
-
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
 
         recyclerView = findViewById(R.id.repair_shop_services_list);
         mAdapter = new ShopsListAdapter(this, shopsList);

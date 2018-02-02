@@ -44,6 +44,7 @@
             android:configChanges="orientation|keyboardHidden|keyboard"
             />
         <activity android:name=".ShopServicesList"
+            android:parentActivityName=".HomeScreen"
             android:theme="@style/MyFontAppTheme"
             android:screenOrientation="nosensor"
             android:configChanges="orientation|keyboardHidden|keyboard"
