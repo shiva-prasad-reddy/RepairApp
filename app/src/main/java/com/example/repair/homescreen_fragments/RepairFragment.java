@@ -63,20 +63,15 @@ public class RepairFragment extends Fragment {
     private TextInputEditText bottomSheetPincode;
     private TextView currentLocation;
 
-    private static String PINCODE;
+    private Pincode PINCODE;
     private ShimmerFrameLayout mShimmerViewContainer;
-
-    public RepairFragment() {
-        // Required empty public constructor
-    }
+    SharedPreferences.Editor editor;
+    SharedPreferences sharedPreferences;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
-    SharedPreferences.Editor editor;
-    SharedPreferences sharedPreferences;
 
     @Override
     public void onResume() {
@@ -102,10 +97,15 @@ public class RepairFragment extends Fragment {
 
 
 
+
+
         mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
         recyclerView = view.findViewById(R.id.repair_recycler_view);
         repairItemList = new ArrayList < > ();
-        mAdapter = new RepairItemAdapter(getActivity(), repairItemList);
+
+        PINCODE = new Pincode();
+
+        mAdapter = new RepairItemAdapter(getActivity(), repairItemList, PINCODE);
 
         location = view.findViewById(R.id.location);
         currentLocation = view.findViewById(R.id.current_location);
@@ -118,34 +118,20 @@ public class RepairFragment extends Fragment {
         recyclerView.setAdapter(mAdapter);
         recyclerView.setNestedScrollingEnabled(false);
 
-
-        //see view to bottomSheet get user location and pincode and give option to edit their location manually
         View bottomSheetView = getLayoutInflater().inflate(R.layout.location_bottom_sheet, null);
-
-
         dialog = new BottomSheetDialog(getContext());
         dialog.setContentView(bottomSheetView);
-
-
         bottomSheetPincode = bottomSheetView.findViewById(R.id.bottom_pincode);
-
         bottomSheetView.findViewById(R.id.location_okay).setOnClickListener( v -> {
-            PINCODE = bottomSheetPincode.getText().toString();
-            currentLocation.setText(PINCODE);
-
-            editor.putString("PINCODE",PINCODE);
+            PINCODE.setPINCODE(bottomSheetPincode.getText().toString());
+            currentLocation.setText(PINCODE.getPINCODE());
+            editor.putString("PINCODE",PINCODE.getPINCODE());
             editor.commit();
-
             dialog.dismiss();
         });
 
 
-        location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.show();
-            }
-        });
+        location.setOnClickListener(v -> dialog.show());
 
         fetchRepairItems();
         return view;
@@ -154,14 +140,6 @@ public class RepairFragment extends Fragment {
 
 
     private void fetchRepairItems() {
-/*
-        final ProgressDialog progressDialog = new ProgressDialog(getContext());
-        progressDialog.setCancelable(false);
-        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        progressDialog.show();
-        progressDialog.setContentView(R.layout.progress_dialog_style);
-
-*/
 
         String URL = "https://repair-c8047.firebaseio.com/repairs/electrical.json";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
@@ -185,131 +163,33 @@ public class RepairFragment extends Fragment {
                 }
                 repairItemList.clear();
                 repairItemList.addAll(repairItems);
-                // refreshing recycler view
                 mAdapter.notifyDataSetChanged();
-              //  progressDialog.cancel();
-                // stop animating Shimmer and hide the layout
                 mShimmerViewContainer.stopShimmerAnimation();
                 mShimmerViewContainer.setVisibility(View.GONE);
                 String pin = sharedPreferences.getString("PINCODE",null);
                 if(pin == null) {
                     dialog.show();
                 } else {
-                    PINCODE = pin;
-                    bottomSheetPincode.setText(PINCODE);
-                    currentLocation.setText(PINCODE);
+                    PINCODE.setPINCODE(pin);
+                    bottomSheetPincode.setText(PINCODE.getPINCODE());
+                    currentLocation.setText(PINCODE.getPINCODE());
                 }
 
             }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        },null);
 
         AppController.getInstance().addToRequestQueue(request);
     }
 
-    /**
-     * Converting dp to pixel
-     */
-    private int dpToPx(int dp) {
-        Resources r = getResources();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
-    }
+    public static class Pincode {
+        private String PINCODE;
 
-    class RepairItemAdapter extends RecyclerView.Adapter < RepairItemAdapter.MyViewHolder > {
-        private Context context;
-        private List < RepairItem > repairItemList;
-
-        public class MyViewHolder extends RecyclerView.ViewHolder {
-            public TextView name;
-            public ImageView thumbnail;
-            public CardView cardView;
-
-            public MyViewHolder(final View view) {
-                super(view);
-                name = view.findViewById(R.id.title);
-                thumbnail = view.findViewById(R.id.thumbnail);
-                cardView = view.findViewById(R.id.card_view);
-
-            }
+        public void setPINCODE(String PINCODE) {
+            this.PINCODE = PINCODE;
         }
 
-
-        public RepairItemAdapter(Context context, List < RepairItem > repairItemList) {
-            this.context = context;
-            this.repairItemList = repairItemList;
-        }
-
-        @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.single_repair_item, parent, false);
-
-            return new MyViewHolder(itemView);
-        }
-
-        @Override
-        public void onBindViewHolder(MyViewHolder holder, final int position) {
-            final RepairItem repairItem = repairItemList.get(position);
-            holder.name.setText(repairItem.getTitle());
-            Glide.with(context).load(repairItem.getImage()).into(holder.thumbnail);
-            holder.cardView.setContentDescription(repairItem.getTitle());
-            holder.thumbnail.setContentDescription(repairItem.getTitle());
-            holder.cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent viewShopsList = new Intent(getContext(), ShopServicesList.class);
-                    viewShopsList.putExtra("product_name",v.getContentDescription());
-                    viewShopsList.putExtra("location",PINCODE);
-                    startActivity(viewShopsList);
-                }
-            });
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return repairItemList.size();
-        }
-    }
-
-
-    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
-
-        private int spanCount;
-        private int spacing;
-        private boolean includeEdge;
-
-        public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
-            this.spanCount = spanCount;
-            this.spacing = spacing;
-            this.includeEdge = includeEdge;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            int position = parent.getChildAdapterPosition(view); // item position
-            int column = position % spanCount; // item column
-
-            if (includeEdge) {
-                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
-                outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
-
-                if (position < spanCount) { // top edge
-                    outRect.top = spacing;
-                }
-                outRect.bottom = spacing; // item bottom
-            } else {
-                outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
-                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
-                if (position >= spanCount) {
-                    outRect.top = spacing; // item top
-                }
-            }
+        public String getPINCODE() {
+            return PINCODE;
         }
     }
 

@@ -1,10 +1,14 @@
 package com.example.repair;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
@@ -22,10 +26,23 @@ public class Welcome extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
-
         auth = FirebaseAuth.getInstance();
-        Intent homepage = new Intent(getBaseContext(),HomeScreen.class);
+        if(hasNewtworkConnection()) {
+            startNextProcess();
+        } else {
+            setContentView(R.layout.no_internet);
+        }
+
+    }
+    private void startNextProcess() {
+
+
+
+        login();
+
+/*
+
+        Intent homepage = new Intent(getBaseContext(), HomeScreen.class);
         startActivity(homepage);
         finish();
       /*  Handler handler = new Handler();
@@ -39,7 +56,6 @@ public class Welcome extends AppCompatActivity {
             }
         },1L);
         */
-
     }
 
     public void login() {
@@ -95,7 +111,16 @@ public class Welcome extends AppCompatActivity {
         }
     }
 
+    private boolean hasNewtworkConnection() {
+        boolean connected = false;
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo =  cm.getActiveNetworkInfo();
+        connected = networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnected();
+        return connected;
+    }
+
+
     private void showSnackbar(int msg) {
-        Snackbar.make(findViewById(R.id.welcome_screen),getString(msg),Snackbar.LENGTH_SHORT).show();
+        Toast.makeText(this,getString(msg),Toast.LENGTH_LONG).show();
     }
 }

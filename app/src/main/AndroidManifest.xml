@@ -4,7 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:name=".app.AppController"
@@ -14,11 +16,13 @@
         android:roundIcon="@mipmap/launcher_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+
         >
         <activity
             android:name=".Welcome"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/FullscreenTheme">
+            android:screenOrientation="nosensor"
+            android:configChanges="orientation|keyboardHidden|keyboard"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,14 +40,23 @@
             android:name=".HomeScreen"
             android:label="@string/title_activity_home_screen"
             android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="nosensor"
+            android:configChanges="orientation|keyboardHidden|keyboard"
             />
         <activity android:name=".ShopServicesList"
             android:theme="@style/MyFontAppTheme"
+            android:screenOrientation="nosensor"
+            android:configChanges="orientation|keyboardHidden|keyboard"
             />
         <activity android:name=".Shop"
             android:theme="@style/MyTheme"
+            android:screenOrientation="nosensor"
+            android:configChanges="orientation|keyboardHidden|keyboard"
             />
-        <activity android:name=".AddProduct"></activity>
+        <activity
+            android:name=".AddProduct"
+            android:screenOrientation="nosensor"
+            android:configChanges="orientation|keyboardHidden|keyboard"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

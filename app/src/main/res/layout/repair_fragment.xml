@@ -18,9 +18,6 @@
         >
 
 
-
-
-
         <android.support.constraint.ConstraintLayout
 
             android:id="@+id/location"
@@ -65,8 +62,6 @@
 
         </android.support.constraint.ConstraintLayout>
 
-
-
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmer_view_container"
             android:layout_width="match_parent"
@@ -80,24 +75,62 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <include layout="@layout/shimmer_placeholder" />
+
                 <include layout="@layout/shimmer_placeholder" />
+
                 <include layout="@layout/shimmer_placeholder" />
+
                 <include layout="@layout/shimmer_placeholder" />
+
                 <include layout="@layout/shimmer_placeholder" />
             </LinearLayout>
 
 
         </com.facebook.shimmer.ShimmerFrameLayout>
 
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/repair_recycler_view"
+        <LinearLayout
+            android:id="@+id/content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/location"
-            android:clipToPadding="false"
-            android:scrollbars="vertical" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                app:cardCornerRadius="0dp">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/Devic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:text="Appliances"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toTopOf="@+id/repair_recycler_view"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/repair_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/Devic"
+                        android:clipToPadding="false"
+                        android:scrollbars="vertical"
+                        app:layout_constraintTop_toBottomOf="@+id/Devic" />
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
 
 
     </LinearLayout>

@@ -30,20 +30,16 @@ public class HomeScreen extends AppCompatActivity {
         viewPager.setCurrentItem(0);
 
         navigation = findViewById(R.id.navigation);
-        mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.navigation_repair:
-                        viewPager.setCurrentItem(0);
-                        break;
-                    case R.id.navigation_shopping:
-                        viewPager.setCurrentItem(1);
-                        break;
-                }
-                return true;
+        mOnNavigationItemSelectedListener = item -> {
+            switch (item.getItemId()) {
+                case R.id.navigation_repair:
+                    viewPager.setCurrentItem(0);
+                    break;
+                case R.id.navigation_shopping:
+                    viewPager.setCurrentItem(1);
+                    break;
             }
+            return true;
         };
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

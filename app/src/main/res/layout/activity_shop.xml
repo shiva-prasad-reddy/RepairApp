@@ -50,7 +50,8 @@
                 app:civ_border_width="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/screen_background_light_transparent" />
 
             <TextView
                 android:id="@+id/owner_name"
@@ -59,7 +60,6 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:elevation="5dp"
-                android:text="Name"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="@+id/owner_image"
                 app:layout_constraintStart_toStartOf="@+id/owner_image"
@@ -93,10 +93,10 @@
                         android:layout_marginTop="65dp"
                         android:fontFamily="@font/open_sans_semibold"
                         android:paddingBottom="0dp"
-                        android:text="Shiva Prasad Reddy"
+                        android:textAlignment="center"
                         android:textAllCaps="true"
                         android:textAppearance="@android:style/TextAppearance.Material.Large"
-                        android:textSize="30sp"
+                        android:textSize="28sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -121,7 +121,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:text="landmark"
                             android:textSize="10sp"
                             tools:layout_editor_absoluteX="85dp"
                             tools:layout_editor_absoluteY="93dp" />
@@ -131,7 +130,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
-                            android:text="pincode"
                             android:textSize="10sp"
                             tools:layout_editor_absoluteX="248dp"
                             tools:layout_editor_absoluteY="109dp" />
@@ -141,7 +139,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="15dp"
                             android:layout_marginLeft="8dp"
-                            android:text="hours"
                             android:textSize="10sp"
                             tools:layout_editor_absoluteX="185dp"
                             tools:layout_editor_absoluteY="122dp" />
@@ -214,7 +211,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="TextView"
                         android:textAppearance="@android:style/TextAppearance.Material.Large"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView5"
@@ -226,7 +222,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="TextView"
                         android:textAppearance="@android:style/TextAppearance.Material.Large"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
@@ -250,7 +245,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="TextView"
                         android:textAppearance="@android:style/TextAppearance.Material.Large"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView6"
@@ -333,14 +327,13 @@
             android:layout_marginEnd="1dp"
             android:background="?attr/selectableItemBackground"
             android:text="CALL"
-            android:textAllCaps="false"
             android:textColor="@color/cardview_light_background"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/book"
-            app:layout_constraintTop_toTopOf="parent"
 
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/book"
@@ -351,8 +344,8 @@
             android:layout_marginStart="1dp"
             android:background="?attr/selectableItemBackground"
             android:text="Book"
-            android:textAllCaps="false"
             android:textColor="@color/cardview_light_background"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/call"
             app:layout_constraintStart_toStartOf="parent"
