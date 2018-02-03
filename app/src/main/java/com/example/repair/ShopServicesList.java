@@ -65,7 +65,6 @@ public class ShopServicesList extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(PRODUCT_NAME);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
 
         recyclerView = findViewById(R.id.repair_shop_services_list);
         mAdapter = new ShopsListAdapter(this, shopsList);
@@ -187,7 +186,7 @@ public class ShopServicesList extends AppCompatActivity {
                 next = itemView.findViewById(R.id.next);
                 shop_name = itemView.findViewById(R.id.SHOP_NAME);
                 owner_name = itemView.findViewById(R.id.OWNER_NAME);
-                contact_number = itemView.findViewById(R.id.contact_number);
+                contact_number = itemView.findViewById(R.id.product_name);
                 service_brands = itemView.findViewById(R.id.service_brands);
                 service_brands_layout = itemView.findViewById(R.id.service_brands_layout);
             }

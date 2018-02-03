@@ -36,7 +36,6 @@ dependencies {
     compile 'com.android.volley:volley:1.1.0'
     compile 'com.github.bumptech.glide:glide:3.8.0'
 
-
     // Shimmer
 
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
@@ -50,6 +49,14 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
 }
+
+
+
+
+
+
+
+
 
 
 

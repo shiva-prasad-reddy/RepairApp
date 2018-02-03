@@ -146,10 +146,12 @@ public class Shop extends AppCompatActivity {
         number.setText(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
         date.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
 
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("COMPLAINT");
+        final String id = databaseReference.push().getKey();
+
         bottomSheetView.findViewById(R.id.done).setOnClickListener( v -> {
             String problem = TextUtils.isEmpty(problemDescription.getText().toString()) ? "UNKNOWN" : problemDescription.getText().toString();
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("COMPLAINT");
-            String id = databaseReference.push().getKey();
+
             Complaint complaint = new Complaint();
             complaint.PRODUCT_NAME = PRODUCT_NAME;
             complaint.PROBLEM_DESCRIPTION = problem;
