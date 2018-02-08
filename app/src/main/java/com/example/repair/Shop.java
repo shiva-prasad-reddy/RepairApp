@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.repair.pojo.Complaint;
+import com.example.repair.pojo.STATUS;
 import com.example.repair.pojo.ShopDetails;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -157,6 +158,7 @@ public class Shop extends AppCompatActivity {
             complaint.PROBLEM_DESCRIPTION = problem;
             complaint.DATE = date.getText().toString();
             complaint.TYPE = TYPE;
+            complaint.STATUS = STATUS.PENDING.toString();
             complaint.CONTACT_NUMBER = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
             complaint.PINCODE = getApplicationContext().getSharedPreferences("REPAIRAPP",0).getString("PINCODE","000000");
             databaseReference.child(shopDetails.SHOP_ID).child(id).setValue(complaint);

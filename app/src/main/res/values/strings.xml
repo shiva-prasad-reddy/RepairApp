@@ -26,7 +26,13 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="SERVICES_LIST">
+        <item>APPLIANCES</item>
+        <item>ELECTRICAL</item>
+        <item>COMPUTER_REPAIR</item>
+        <item>PLUMBING</item>
+        <item>CARPENTRY</item>
+    </string-array>
 
 </resources>
