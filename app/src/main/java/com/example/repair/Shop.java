@@ -1,6 +1,7 @@
 package com.example.repair;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,22 +12,35 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.repair.homescreen_fragments.GridSpacingItemDecoration;
 import com.example.repair.pojo.Complaint;
+import com.example.repair.pojo.Product;
 import com.example.repair.pojo.STATUS;
 import com.example.repair.pojo.ShopDetails;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Shop extends AppCompatActivity {
 
@@ -37,6 +51,10 @@ public class Shop extends AppCompatActivity {
     private ShopDetails shopDetails;
     private String PRODUCT_NAME, TYPE;
     private BottomSheetDialog dialog;
+
+    private RecyclerView view_products_recyclerView;
+    private List<Product> products_ItemList;
+    private ProductItemAdapter mProductItemAdapter;
 
     private TextInputEditText problemDescription;
     private Button done;
@@ -169,6 +187,57 @@ public class Shop extends AppCompatActivity {
         book.setOnClickListener(v -> dialog.show());
 
 
-    }
+
+        view_products_recyclerView = findViewById(R.id.shop_view_products_recycler_view);
+        products_ItemList = new ArrayList< >();
+        mProductItemAdapter = new ProductItemAdapter(this, products_ItemList);
+        view_products_recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        view_products_recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, 2, true));
+        view_products_recyclerView.setItemAnimator(new DefaultItemAnimator());
+        view_products_recyclerView.setAdapter(mProductItemAdapter);
+        view_products_recyclerView.setNestedScrollingEnabled(false);
+
+
+
+        FirebaseDatabase.getInstance().getReference("PRODUCT").child(shopDetails.SHOP_ID).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Product product = dataSnapshot.getValue(Product.class);
+                //Toast.makeText(getContext(), complaint.CONTACT_NUMBER, Toast.LENGTH_SHORT).show();
+
+                product.PRODUCT_ID = dataSnapshot.getKey();
+                product.SHOP_ID = shopDetails.SHOP_ID;
+                products_ItemList.add(product);
+                mProductItemAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+}
+
+
+
 
 }

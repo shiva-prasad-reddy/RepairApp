@@ -1,5 +1,6 @@
 package com.example.repair;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -88,6 +89,10 @@ public class HomeScreen extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.sign_out_user:
                 FirebaseAuth.getInstance().signOut();
+                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("REPAIRAPP",0);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.commit();
                 finish();
                 return true;
             default:

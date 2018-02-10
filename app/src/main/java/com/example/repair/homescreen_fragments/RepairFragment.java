@@ -98,7 +98,7 @@ public class RepairFragment extends Fragment {
 
 
 
-        appliances_recyclerView = view.findViewById(R.id.appliances_recycler_view);
+        appliances_recyclerView = view.findViewById(R.id.view_products_recycler_view);
         appliances_repairItemList = new ArrayList < > ();
         appliances_mAdapter = new RepairItemAdapter(getActivity(), appliances_repairItemList, PINCODE, "APPLIANCES");
         appliances_recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));

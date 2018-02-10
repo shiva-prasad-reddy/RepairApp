@@ -30,7 +30,7 @@
     <string-array name="SERVICES_LIST">
         <item>APPLIANCES</item>
         <item>ELECTRICAL</item>
-        <item>COMPUTER_REPAIR</item>
+        <item>COMPUTER</item>
         <item>PLUMBING</item>
         <item>CARPENTRY</item>
     </string-array>

@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ import com.bumptech.glide.Glide;
 import com.example.repair.app.AppController;
 import com.example.repair.pojo.ShopDetails;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.github.florent37.expansionpanel.ExpansionHeader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -117,6 +119,8 @@ public class ShopServicesList extends AppCompatActivity {
                             item.OWNER_NAME = object.getString("OWNER_NAME");
                             item.OWNER_IMAGE = object.getString("OWNER_IMAGE");
                             item.CONTACT_NUMBER = object.getString("CONTACT_NUMBER");
+                            item.STATUS = object.getString("STATUS");
+
                             item.AUTHORISED = object.getString("AUTHORISED").equals("YES") ? true : false;
                             if(item.AUTHORISED) {
                                 ArrayList<String> services = new ArrayList<>();
@@ -177,6 +181,8 @@ public class ShopServicesList extends AppCompatActivity {
             public TextView shop_name, owner_name, contact_number;
             public ListView service_brands;
             public LinearLayout service_brands_layout;
+            public CardView ShopCard;
+            public ExpansionHeader expansionHeader;
 
             public MyShopViewHolder(View itemView) {
                 super(itemView);
@@ -189,6 +195,8 @@ public class ShopServicesList extends AppCompatActivity {
                 contact_number = itemView.findViewById(R.id.product_name);
                 service_brands = itemView.findViewById(R.id.service_brands);
                 service_brands_layout = itemView.findViewById(R.id.service_brands_layout);
+                ShopCard = itemView.findViewById(R.id.shop_card);
+                expansionHeader = itemView.findViewById(R.id.expansion_header);
             }
         }
 
@@ -211,6 +219,11 @@ public class ShopServicesList extends AppCompatActivity {
             Glide.with(context).load(shopDetails.OWNER_IMAGE).into(holder.owner_image);
             holder.call.setContentDescription(shopDetails.CONTACT_NUMBER);
             holder.next.setTag(shopDetails);
+
+            if(shopDetails.STATUS.equals("OFFLINE")) {
+                holder.ShopCard.setAlpha((float)0.4);
+                holder.expansionHeader.setEnabled(false);
+            }
 
             holder.shop_name.setText(shopDetails.SHOP_NAME);
             holder.owner_name.setText(shopDetails.OWNER_NAME);

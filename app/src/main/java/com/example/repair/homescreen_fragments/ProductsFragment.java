@@ -11,10 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.repair.ProductItemAdapter;
 import com.example.repair.R;
+import com.example.repair.Shop;
 import com.example.repair.pojo.Product;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 
 /**
@@ -27,10 +36,10 @@ public class ProductsFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private RecyclerView view_products_recyclerView;
+    private List<Product> products_ItemList;
+    private ProductItemAdapter mProductItemAdapter;
 
-    private SharedPreferences sharedPreferences;
-    private RecyclerView productsRecyclerView;
-    private ArrayList<Product> productItemsList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,29 +47,49 @@ public class ProductsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.products_fragment, container, false);
 
-
-        sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("TAPAIR",0);
-
-/*
-
-
-
-        productsRecyclerView = view.findViewById(R.id.products_recycler_view);
-        productItemsList = new ArrayList< >();
-        mAdapterk = new RepairFragment.RepairItemAdapter(getActivity(), repairItemList);
-
-        location = view.findViewById(R.id.location);
-        currentLocation = view.findViewById(R.id.current_location);
+        view_products_recyclerView = view.findViewById(R.id.fragment_view_products_recycler_view);
+        products_ItemList = new ArrayList< >();
+        mProductItemAdapter = new ProductItemAdapter(getContext(), products_ItemList);
+        view_products_recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        view_products_recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, 2, true));
+        view_products_recyclerView.setItemAnimator(new DefaultItemAnimator());
+        view_products_recyclerView.setAdapter(mProductItemAdapter);
+        view_products_recyclerView.setNestedScrollingEnabled(false);
 
 
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 3);
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new RepairFragment.GridSpacingItemDecoration(2, dpToPx(2), true));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.setNestedScrollingEnabled(false);
 
-        */
+        FirebaseDatabase.getInstance().getReference("PRODUCT").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+               Iterator<DataSnapshot> itr =  dataSnapshot.getChildren().iterator();
+               while(itr.hasNext()) {
+                   DataSnapshot snapshot = itr.next();
+                   String shop_id = snapshot.getKey();
+
+                   Iterator<DataSnapshot> productIterator = snapshot.getChildren().iterator();
+                   while(productIterator.hasNext()) {
+                       DataSnapshot snap = productIterator.next();
+                       Product product = snap.getValue(Product.class);
+                       product.SHOP_ID = shop_id;
+                       product.PRODUCT_ID = snap.getKey();
+                       products_ItemList.add(product);
+
+                   }
+                   mProductItemAdapter.notifyDataSetChanged();
+               }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
         return view;
 
     }

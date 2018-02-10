@@ -14,6 +14,7 @@ import java.util.List;
 public class ShopDetails implements Serializable {
 
     public String SHOP_ID, SHOP_NAME, OWNER_NAME, OWNER_IMAGE, CONTACT_NUMBER;
+    public String STATUS;
     public boolean AUTHORISED;
     public ArrayList<String> SERVICE_BRANDS, DEVICES;
     public ShopDetails() {

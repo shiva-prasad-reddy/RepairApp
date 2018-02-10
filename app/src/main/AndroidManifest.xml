@@ -50,7 +50,6 @@
             android:screenOrientation="nosensor"
             android:theme="@style/MyTheme" />
 
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
@@ -62,7 +61,7 @@
             android:parentActivityName=".seller.Seller"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.NoActionBar" />
-
+        <activity android:name=".ProductPurchase"></activity>
     </application>
 
 </manifest>
