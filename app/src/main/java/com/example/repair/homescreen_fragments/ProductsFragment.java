@@ -49,7 +49,7 @@ public class ProductsFragment extends Fragment {
 
         view_products_recyclerView = view.findViewById(R.id.fragment_view_products_recycler_view);
         products_ItemList = new ArrayList< >();
-        mProductItemAdapter = new ProductItemAdapter(getContext(), products_ItemList);
+        mProductItemAdapter = new ProductItemAdapter(getActivity(), products_ItemList);
         view_products_recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         view_products_recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, 2, true));
         view_products_recyclerView.setItemAnimator(new DefaultItemAnimator());

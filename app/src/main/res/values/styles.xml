@@ -27,6 +27,16 @@
 
     </style>
 
+
+    <style name="MyThemeNoTranslucentStatusBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/open_sans_light</item>
+
+    </style>
+
     <style name="FullscreenTheme" parent="MyTheme">
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowBackground">@color/window_background</item>

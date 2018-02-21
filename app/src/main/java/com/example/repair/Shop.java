@@ -180,9 +180,12 @@ public class Shop extends AppCompatActivity {
             complaint.CONTACT_NUMBER = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
             complaint.PINCODE = getApplicationContext().getSharedPreferences("REPAIRAPP",0).getString("PINCODE","000000");
             databaseReference.child(shopDetails.SHOP_ID).child(id).setValue(complaint);
+            FirebaseDatabase.getInstance().getReference("USER_DATA").child(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber()).child("COMPLAINT").child(id).setValue(shopDetails.SHOP_ID);
             problemDescription.setText("");
             dialog.dismiss();
+            book.setVisibility(View.GONE);
             Snackbar.make(book,"Service Booked.",Snackbar.LENGTH_LONG).show();
+
         });
         book.setOnClickListener(v -> dialog.show());
 

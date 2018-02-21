@@ -26,7 +26,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-
+    <string name="Rs">\u20B9</string>
     <string-array name="SERVICES_LIST">
         <item>APPLIANCES</item>
         <item>ELECTRICAL</item>

@@ -1,5 +1,6 @@
 package com.example.repair;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -94,6 +95,9 @@ public class HomeScreen extends AppCompatActivity {
                 editor.clear();
                 editor.commit();
                 finish();
+                return true;
+            case R.id.complaints:
+                startActivity(new Intent(this,UserComplaints.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

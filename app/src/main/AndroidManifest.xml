@@ -61,7 +61,13 @@
             android:parentActivityName=".seller.Seller"
             android:screenOrientation="nosensor"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ProductPurchase"></activity>
+        <activity
+            android:name=".ProductPurchase"
+            android:theme="@style/MyThemeNoTranslucentStatusBar" />
+        <activity android:name=".UserComplaints"
+            android:parentActivityName=".HomeScreen"
+            />
+        <activity android:name=".UserOrders"></activity>
     </application>
 
 </manifest>
