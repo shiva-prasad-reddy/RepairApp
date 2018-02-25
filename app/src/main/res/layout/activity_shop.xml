@@ -329,7 +329,7 @@
         >
 
         <Button
-            android:id="@+id/CALL"
+            android:id="@+id/BUY"
             style="@android:style/Widget.Material.Light.Button.Borderless"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -356,7 +356,7 @@
             android:textColor="@color/cardview_light_background"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/CALL"
+            app:layout_constraintEnd_toStartOf="@+id/BUY"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

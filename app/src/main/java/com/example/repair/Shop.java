@@ -1,7 +1,6 @@
 package com.example.repair;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,14 +11,11 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -71,7 +67,7 @@ public class Shop extends AppCompatActivity {
         TYPE = intent.getStringExtra("TYPE");
 
 
-        call = findViewById(R.id.CALL);
+        call = findViewById(R.id.BUY);
         book = findViewById(R.id.BOOK);
 
         shopImage = findViewById(R.id.SHOP_IMAGE);
@@ -179,6 +175,9 @@ public class Shop extends AppCompatActivity {
             complaint.STATUS = STATUS.PENDING.toString();
             complaint.CONTACT_NUMBER = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
             complaint.PINCODE = getApplicationContext().getSharedPreferences("REPAIRAPP",0).getString("PINCODE","000000");
+            complaint.ADDRESS = getApplicationContext().getSharedPreferences("REPAIRAPP",0).getString("ADDRESS","NOT AVAILABLE");
+
+
             databaseReference.child(shopDetails.SHOP_ID).child(id).setValue(complaint);
             FirebaseDatabase.getInstance().getReference("USER_DATA").child(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber()).child("COMPLAINT").child(id).setValue(shopDetails.SHOP_ID);
             problemDescription.setText("");

@@ -1,23 +1,43 @@
 package com.example.repair;
 
+import android.*;
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.repair.homescreen_fragments.BottomNavigationBehavior;
 import com.example.repair.homescreen_fragments.CustomPagerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.DexterError;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.PermissionRequestErrorListener;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.karumi.dexter.listener.single.PermissionListener;
+
+import java.util.List;
 
 public class HomeScreen extends AppCompatActivity {
 
@@ -31,7 +51,6 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-
         viewPager = findViewById(R.id.view_pager);
         fragmentPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(fragmentPagerAdapter);
@@ -75,6 +94,8 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int state) {}
         });
+
+
     }
 
     @Override
@@ -83,6 +104,10 @@ public class HomeScreen extends AppCompatActivity {
         inflater.inflate(R.menu.user, menu);
         return true;
     }
+
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -99,9 +124,15 @@ public class HomeScreen extends AppCompatActivity {
             case R.id.complaints:
                 startActivity(new Intent(this,UserComplaints.class));
                 return true;
+            case R.id.orders:
+                startActivity(new Intent(this,UserOrders.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
+
 
 }

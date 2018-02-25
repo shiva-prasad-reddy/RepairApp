@@ -7,22 +7,26 @@ package com.example.repair.pojo;
 public class RepairItem {
 
     String title;
-    String image;
+    int image;
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+   // public void setTitle(String title) {
+    //    this.title = title;
+    //}
 
-    public String getImage() {
+    public int getImage() {
         return image;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+
+    public RepairItem() {}
+    public RepairItem(String title, int image) {
+        this.title = title;
+        this.image =  image;
     }
+
 
 }

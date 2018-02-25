@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".app.AppController"
@@ -67,7 +68,10 @@
         <activity android:name=".UserComplaints"
             android:parentActivityName=".HomeScreen"
             />
-        <activity android:name=".UserOrders"></activity>
+        <activity
+            android:name=".UserOrders"
+            android:parentActivityName=".HomeScreen"
+            ></activity>
     </application>
 
 </manifest>

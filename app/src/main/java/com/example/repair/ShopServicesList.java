@@ -163,7 +163,7 @@ public class ShopServicesList extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ShopServicesList.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ShopServicesList.this, "No Services Points found in your location", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -188,7 +188,7 @@ public class ShopServicesList extends AppCompatActivity {
                 super(itemView);
                 owner_image = itemView.findViewById(R.id.OWNER_IMAGE);
                 authorised = itemView.findViewById(R.id.authorised);
-                call = itemView.findViewById(R.id.CALL);
+                call = itemView.findViewById(R.id.BUY);
                 next = itemView.findViewById(R.id.next);
                 shop_name = itemView.findViewById(R.id.SHOP_NAME);
                 owner_name = itemView.findViewById(R.id.OWNER_NAME);
