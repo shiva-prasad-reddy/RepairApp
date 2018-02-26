@@ -13,11 +13,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -190,6 +197,73 @@ public class Shop extends AppCompatActivity {
 
 
 
+
+        RecyclerView reviews_recyclerView = findViewById(R.id.reviews_recycler_view);
+
+        ArrayList<String> reviewsList = new ArrayList<>();
+
+        ItemAdapter itemAdapter = new ItemAdapter(reviewsList);
+
+        reviews_recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,true));
+        reviews_recyclerView.setAdapter(itemAdapter);
+        reviews_recyclerView.setNestedScrollingEnabled(false);
+
+        ((ImageView) findViewById(R.id.post_feedback)).setOnClickListener( v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            View adv = getLayoutInflater().inflate(R.layout.layout_for_feedback, null);
+            TextInputEditText input = adv.findViewById(R.id.feedback);
+            builder.setView(adv);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    FirebaseDatabase.getInstance().getReference("REVIEWS").child(shopDetails.SHOP_ID).child(id).setValue(input.getText().toString());
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            builder.show();
+        });
+
+
+
+        FirebaseDatabase.getInstance().getReference("REVIEWS").child(shopDetails.SHOP_ID).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                reviewsList.add(dataSnapshot.getValue().toString());
+                itemAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
         view_products_recyclerView = findViewById(R.id.shop_view_products_recycler_view);
         products_ItemList = new ArrayList< >();
         mProductItemAdapter = new ProductItemAdapter(this, products_ItemList);
@@ -205,8 +279,6 @@ public class Shop extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Product product = dataSnapshot.getValue(Product.class);
-                //Toast.makeText(getContext(), complaint.CONTACT_NUMBER, Toast.LENGTH_SHORT).show();
-
                 product.PRODUCT_ID = dataSnapshot.getKey();
                 product.SHOP_ID = shopDetails.SHOP_ID;
                 products_ItemList.add(product);
@@ -238,6 +310,48 @@ public class Shop extends AppCompatActivity {
 
 
 }
+
+
+
+
+
+    class ItemAdapter extends RecyclerView.Adapter <ItemAdapter.MyViewHolder > {
+
+        private List<String> sItemList;
+
+        public class MyViewHolder extends RecyclerView.ViewHolder {
+            public TextView text;
+
+            public MyViewHolder(final View view) {
+                super(view);
+                text = view.findViewById(R.id.text);
+
+            }
+        }
+
+
+        public ItemAdapter(List <String> sItemList) {
+            this.sItemList = sItemList;
+        }
+
+        @Override
+        public ItemAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.reviews_list_item, parent, false);
+            return new ItemAdapter.MyViewHolder(itemView);
+        }
+
+        @Override
+        public void onBindViewHolder(ItemAdapter.MyViewHolder holder, final int position) {
+            final String rev = sItemList.get(position);
+            holder.text.setText(rev);
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return sItemList.size();
+        }
+    }
 
 
 

@@ -33,6 +33,7 @@ import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
@@ -67,6 +68,15 @@ public class RepairFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("REPAIRAPP",0);
+        editor = sharedPreferences.edit();
+        String pin = sharedPreferences.getString("PINCODE",null);
+        if(pin == null) {
+
+            enableLocation();
+        }
     }
 
 
@@ -75,10 +85,6 @@ public class RepairFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.repair_fragment, container, false);
-
-
-        sharedPreferences = getActivity().getApplicationContext().getSharedPreferences("REPAIRAPP",0);
-        editor = sharedPreferences.edit();
 
 
 
@@ -206,8 +212,6 @@ public class RepairFragment extends Fragment {
         String pin = sharedPreferences.getString("PINCODE",null);
         if(pin == null) {
 
-            enableLocation();
-
             if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 GPSTracker gps = new GPSTracker(getContext());
                 if(gps.canGetLocation()){
@@ -296,6 +300,8 @@ public class RepairFragment extends Fragment {
                     .addLocationRequest(locationRequest);
 
             builder.setAlwaysShow(true);
+
+
 
             PendingResult<LocationSettingsResult> result =
                     LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());

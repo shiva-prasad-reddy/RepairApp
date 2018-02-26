@@ -47,6 +47,7 @@
             android:theme="@style/MyFontAppTheme" />
         <activity
             android:name=".Shop"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|keyboardHidden|keyboard"
             android:screenOrientation="nosensor"
             android:theme="@style/MyTheme" />
