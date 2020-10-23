@@ -1,0 +1,284 @@
+
+
+    <android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f1f5f7"
+        tools:context="com.example.repair.seller.Inbox"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/status_switch_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginTop="1dp"
+                app:cardCornerRadius="0dp">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="STATUS"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Switch
+                        android:id="@+id/status_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cardView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginTop="4dp"
+                    app:cardCornerRadius="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+
+                        <com.github.florent37.expansionpanel.ExpansionHeader
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:expansion_headerIndicator="@id/headerIndicator"
+                            app:expansion_layout="@id/expansionLayout"
+                            app:expansion_toggleOnClick="true">
+
+                            <!-- HEADER -->
+
+                            <android.support.constraint.ConstraintLayout
+                                android:id="@+id/linearLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+
+                                <TextView
+                                    android:id="@+id/textView4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:padding="12dp"
+                                    android:text="Details"
+                                    android:textColor="@android:color/black"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <android.support.v7.widget.AppCompatImageView
+                                    android:id="@+id/headerIndicator"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:layout_marginEnd="24dp"
+                                    android:layout_marginTop="8dp"
+                                    android:adjustViewBounds="true"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
+
+                            </android.support.constraint.ConstraintLayout>
+
+
+                            <!-- HEADER INDICATOR -->
+
+
+                        </com.github.florent37.expansionpanel.ExpansionHeader>
+
+                        <com.github.florent37.expansionpanel.ExpansionLayout
+                            android:id="@+id/expansionLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <!-- CONTENT -->
+
+                            <android.support.constraint.ConstraintLayout
+                                android:id="@+id/_see"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:id="@+id/imageView2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="25dp"
+                                    android:layout_marginStart="16dp"
+                                    app:layout_constraintBottom_toBottomOf="@+id/SHOP_ADDRESS"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="@+id/SHOP_ADDRESS"
+                                    app:srcCompat="@drawable/ic_my_location_black_24dp" />
+
+                                <ImageView
+                                    android:id="@+id/imageView4"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginTop="8dp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/SHOP_ADDRESS"
+                                    app:srcCompat="@drawable/ic_email_black_24dp" />
+
+                                <ImageView
+                                    android:id="@+id/imageView5"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginTop="24dp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:srcCompat="@drawable/ic_call_black" />
+
+                                <ImageView
+                                    android:id="@+id/imageView6"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_marginBottom="24dp"
+                                    android:layout_marginTop="8dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="@+id/imageView4"
+                                    app:layout_constraintTop_toBottomOf="@+id/imageView4"
+                                    app:srcCompat="@drawable/ic_web_black_24dp" />
+
+                                <TextView
+                                    android:id="@+id/CONTACT_NUMBER"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:textAppearance="@android:style/TextAppearance.Material.Large"
+                                    android:textSize="16sp"
+                                    app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                                    app:layout_constraintStart_toEndOf="@+id/imageView5"
+                                    app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
+                                <TextView
+                                    android:id="@+id/SHOP_ADDRESS"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginTop="8dp"
+                                    android:text="SHOP FULL ADDRESS"
+                                    android:textAppearance="@android:style/TextAppearance.Material.Large"
+                                    android:textSize="16sp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toEndOf="@+id/imageView2"
+                                    app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+                                <TextView
+                                    android:id="@+id/MAIL"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:text="repairapp@gmail.com"
+                                    android:textAppearance="@android:style/TextAppearance.Material.Large"
+                                    android:textSize="16sp"
+                                    app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+                                    app:layout_constraintStart_toEndOf="@+id/imageView4"
+                                    app:layout_constraintTop_toTopOf="@+id/imageView4" />
+
+                                <TextView
+                                    android:id="@+id/WEBSITE"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="16dp"
+                                    android:textAppearance="@android:style/TextAppearance.Material.Large"
+                                    android:textSize="16sp"
+                                    app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+                                    app:layout_constraintStart_toEndOf="@+id/imageView6"
+                                    app:layout_constraintTop_toTopOf="@+id/imageView6" />
+
+                            </android.support.constraint.ConstraintLayout>
+
+
+                        </com.github.florent37.expansionpanel.ExpansionLayout>
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginTop="4dp"
+                    app:cardCornerRadius="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView3">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Complaints Received"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/complaint_box"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#bdbdbd"
+                            android:nestedScrollingEnabled="false" />
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+

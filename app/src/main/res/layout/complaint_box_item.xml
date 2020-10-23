@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/complaint_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.github.florent37.expansionpanel.ExpansionHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:expansion_headerIndicator="@id/headerIndicator"
+                app:expansion_layout="@id/expansionLayout"
+                app:expansion_toggleOnClick="true">
+
+                <!-- HEADER -->
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/constraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:layout_editor_absoluteX="61dp"
+                    tools:layout_editor_absoluteY="50dp">
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/headerIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginTop="8dp"
+                        android:adjustViewBounds="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/date"
+                        app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
+
+                    <ImageView
+                        android:id="@+id/product_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_person_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="16dp"
+                        android:text="date"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/product_name"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                    <TextView
+                        android:id="@+id/product_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="product_name"
+                        app:layout_constraintStart_toEndOf="@+id/product_image"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/contact_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="TextView"
+                        app:layout_constraintStart_toStartOf="@+id/product_name"
+                        app:layout_constraintTop_toBottomOf="@+id/product_name" />
+
+                    <TextView
+                        android:id="@+id/price_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="2dp"
+                        android:text="TextView"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/contact_number"
+                        app:layout_constraintTop_toBottomOf="@+id/contact_number" />
+
+
+                </android.support.constraint.ConstraintLayout>
+
+
+                <!-- HEADER INDICATOR -->
+
+
+            </com.github.florent37.expansionpanel.ExpansionHeader>
+
+            <com.github.florent37.expansionpanel.ExpansionLayout
+                android:id="@+id/expansionLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- CONTENT -->
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:id="@+id/type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginTop="4dp"
+                        android:text="TextView"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        android:id="@+id/callbutton"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginRight="16dp"
+                        app:layout_constraintBottom_toTopOf="@+id/solved_button"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:srcCompat="@drawable/blue_call_image" />
+
+                    <TextView
+                        android:id="@+id/address"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="4dp"
+                        android:text="address"
+                        app:layout_constraintEnd_toStartOf="@+id/callbutton"
+                        app:layout_constraintStart_toStartOf="@+id/type"
+                        app:layout_constraintTop_toBottomOf="@+id/type" />
+
+                    <Button
+                        android:id="@+id/solved_button"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@android:color/holo_green_dark"
+                        android:text="SOLVED"
+                        android:textColor="@android:color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/cancel_button"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/address" />
+
+                    <Button
+                        android:id="@+id/cancel_button"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:background="@android:color/holo_red_dark"
+                        android:text="CANCEL"
+                        android:textColor="@android:color/white"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/solved_button"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/solved_button" />
+
+                </android.support.constraint.ConstraintLayout>
+
+
+            </com.github.florent37.expansionpanel.ExpansionLayout>
+
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</android.support.constraint.ConstraintLayout>

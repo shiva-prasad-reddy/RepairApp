@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+
+        <item
+            android:id="@+id/inbox"
+            android:icon="@drawable/ic_move_to_inbox_black_24dp"
+            android:title="Inbox"
+            android:checked="true"
+            />
+        <item
+            android:id="@+id/orders"
+            android:icon="@drawable/ic_shopping"
+            android:title="Orders"
+            />
+
+
+        <item
+            android:id="@+id/add_product"
+            android:icon="@drawable/ic_add_black_24dp"
+            android:title="New Product"
+            />
+
+        <item
+            android:id="@+id/view_products"
+            android:icon="@drawable/ic_view_list_black_24dp"
+            android:title="View Products"
+            />
+
+
+
+        <item
+            android:id="@+id/remove_product"
+            android:icon="@drawable/ic_delete_forever_black_24dp"
+            android:title="Remove Product"
+            />
+
+
+
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:title="Sign out" />
+
+    </group>
+
+</menu>
