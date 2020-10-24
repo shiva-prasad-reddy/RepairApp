@@ -19,23 +19,33 @@ RepairApp is an android application which provides home services, where customer
 	</tr>
 </table>
 
+### User's Interface
+<table>
+	<tr>
+		<td>
+			Application services and repairs
+			<img src="/deleteme/download2.jpeg" width="250" height="500"></td>
+		<td>
+			List of service points in user’s location
+			<img src="/deleteme/download3.jpeg" width="250" height="500">
+		</td>
+		<td>
+			Booking a service
+			<img src="/deleteme/download4.jpeg" width="250" height="500">
+		</td>
+	</tr>
+	<tr>
+		<td>
+			Catalog of products to purchase
+			<img src="/deleteme/download5.jpeg" width="250" height="500">
+		</td>
+		<td>
+			Purchasing a product
+			<img src="/deleteme/download6.jpeg" width="250" height="500">
+		</td>
+	</tr>
+</table>
 
-
-
-## Application services and repairs
-<img src="/deleteme/download2.jpeg" width="250" height="500">
-
-## List of service points in user’s location
-<img src="/deleteme/download3.jpeg" width="250" height="500">
-
-## Booking a service
-<img src="/deleteme/download4.jpeg" width="250" height="500">
-
-## Catalog of products to purchase
-<img src="/deleteme/download5.jpeg" width="250" height="500">
-
-## Purchasing a product
-<img src="/deleteme/download6.jpeg" width="250" height="500">
 
 ## Service provider internface
 <img src="/deleteme/download7.jpeg" width="250" height="500">
