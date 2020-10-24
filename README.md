@@ -12,7 +12,7 @@ RepairApp is an android application which provides home services, where customer
 
 ## Authentication
 
-<table>
+<table border="0px">
 	<tr>
 		<td><img src="/deleteme/download.jpeg" width="250" height="500"></td>
 		<td><img src="/deleteme/download1.jpeg" width="250" height="500"></td>
