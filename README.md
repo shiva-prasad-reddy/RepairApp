@@ -32,6 +32,8 @@ RepairApp is an android application which provides home services, where customer
 			<i>List of service points in user’s location</i>
 		</td>
 	</tr>
+</table>
+<table>
 	<tr>
 		<td>
 			<img src="/deleteme/download4.jpeg" width="250" height="500">
@@ -44,6 +46,8 @@ RepairApp is an android application which provides home services, where customer
 			<i>Catalog of products to purchase</i>
 		</td>
 	</tr>
+</table>
+<table>
 	<tr>
 		<td>
 			<img src="/deleteme/download6.jpeg" width="250" height="500">
