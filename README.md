@@ -20,10 +20,10 @@ RepairApp is an android application which provides home services, where customer
 </table>
 
 ### User's Interface
-<table>
+<table style="text-align: center; font-style: sans-serif;">
 	<tr>
 		<td>
-			```sh Application services and repairs ```
+			sh Application services and repairs
 			<img src="/deleteme/download2.jpeg" width="250" height="500"></td>
 		<td>
 			List of service points in user’s location
