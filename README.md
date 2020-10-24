@@ -11,8 +11,8 @@ RepairApp is an android application which provides home services, where customer
 # Screenshots of working prototype
 
 ## Authentication
-![image](/deleteme/download.jpeg)
-![image](/deleteme/download1.jpeg)
+<img src="/deleteme/download.jpeg" width="250" height="400">
+<img src="/deleteme/download1.jpeg" width="250" height="400">
 
 ## Application services and repairs
 ![image](/deleteme/download2.jpeg)
