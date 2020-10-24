@@ -6,10 +6,7 @@ RepairApp is an android application which provides home services, where customer
 [Link to Download Apk](/deleteme/RepairApp.apk)
 > Please set your pincode to 500044 to see some demo data.
 
-<figure>
-  <img src="/deleteme/flow.jpg" alt="workflow" width="400" height="400">
-  <figcaption>Work Flow</figcaption>
-</figure>
+<img src="/deleteme/flow.jpg" alt="workflow" width="50%" height="100%">
 
 # Screenshots of working prototype
 
