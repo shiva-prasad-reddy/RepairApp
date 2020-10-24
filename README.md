@@ -9,7 +9,7 @@ RepairApp is an android application which provides home services, where customer
 <img src="/deleteme/flow.jpg" alt="workflow" width="50%" height="100%">
 
 ## Screenshots of working prototype
-
+<br>
 ### Authentication
 <table>
 	<tr>
@@ -18,6 +18,8 @@ RepairApp is an android application which provides home services, where customer
 	</tr>
 </table>
 
+<br>
+<br>
 ### User's Interface
 <table>
 	<tr>
@@ -59,7 +61,8 @@ RepairApp is an android application which provides home services, where customer
 	</tr>
 </table>
 
-
+<br>
+<br>
 ### Service provider internface
 <table>
 	<tr>
@@ -101,6 +104,8 @@ RepairApp is an android application which provides home services, where customer
 	</tr>
 </table>
 
+<br>
+<br>
 ### Creating a new Service provider account (Administrator)
 <table>
 	<tr>
