@@ -23,35 +23,35 @@ RepairApp is an android application which provides home services, where customer
 
 
 ## Application services and repairs
-![image](/deleteme/download2.jpeg)
+<img src="/deleteme/download2.jpeg" width="250" height="500">
 
 ## List of service points in user’s location
-![image](/deleteme/download3.jpeg)
+<img src="/deleteme/download3.jpeg" width="250" height="500">
 
 ## Booking a service
-![image](/deleteme/download4.jpeg)
+<img src="/deleteme/download4.jpeg" width="250" height="500">
 
 ## Catalog of products to purchase
-![image](/deleteme/download5.jpeg)
+<img src="/deleteme/download5.jpeg" width="250" height="500">
 
 ## Purchasing a product
-![image](/deleteme/download6.jpeg)
+<img src="/deleteme/download6.jpeg" width="250" height="500">
 
 ## Service provider internface
-![image](/deleteme/download7.jpeg)
+<img src="/deleteme/download7.jpeg" width="250" height="500">
 
 ## Complaints received
-![image](/deleteme/download8.jpeg)
+<img src="/deleteme/download8.jpeg" width="250" height="500">
 
 ## Orders received
-![image](/deleteme/download9.jpeg)
+<img src="/deleteme/download9.jpeg" width="250" height="500">
 
 ## Add a new product
-![image](/deleteme/download10.jpeg)
+<img src="/deleteme/download10.jpeg" width="250" height="500">
 
 ## Remove a product
-![image](/deleteme/download11.jpeg)
+<img src="/deleteme/download11.jpeg" width="250" height="500">
 
 ## Creating a new Service provider account (Administrator)
-![image](/deleteme/download12.jpeg)
-![image](/deleteme/download13.jpeg)
+<img src="/deleteme/download12.jpeg" width="250" height="500">
+<img src="/deleteme/download13.jpeg" width="250" height="500">
