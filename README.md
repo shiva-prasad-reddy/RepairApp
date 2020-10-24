@@ -11,8 +11,7 @@ RepairApp is an android application which provides home services, where customer
 # Screenshots of working prototype
 
 ## Authentication
-
-<table border="0px">
+<table>
 	<tr>
 		<td><img src="/deleteme/download.jpeg" width="250" height="500"></td>
 		<td><img src="/deleteme/download1.jpeg" width="250" height="500"></td>
@@ -25,12 +24,12 @@ RepairApp is an android application which provides home services, where customer
 		<td>
 			<img src="/deleteme/download2.jpeg" width="250" height="500">
 			<br>
-			<i><small>Application services and repairs</small></i>
+			<i>Application services and repairs</i>
 		</td>
 		<td>
 			<img src="/deleteme/download3.jpeg" width="250" height="500">
 			<br>
-			<i><small>List of service points in user’s location</small></i>
+			<i>List of service points in user’s location</i>
 		</td>
 	</tr>
 	<tr>
@@ -55,21 +54,45 @@ RepairApp is an android application which provides home services, where customer
 </table>
 
 
-## Service provider internface
-<img src="/deleteme/download7.jpeg" width="250" height="500">
+### Service provider internface
+<table>
+	<tr>
+		<td>
+			<img src="/deleteme/download7.jpeg" width="250" height="500">
+			<br>
+			<i>Homepage</i>
+		</td>
+		<td>
+			<img src="/deleteme/download8.jpeg" width="250" height="500">
+			<br>
+			<i>Complaints received</i>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<img src="/deleteme/download9.jpeg" width="250" height="500">
+			<br>
+			<i>Orders received</i>
+		</td>
+		<td>
+			<img src="/deleteme/download10.jpeg" width="250" height="500">
+			<br>
+			<i>Add a new product</i>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<img src="/deleteme/download11.jpeg" width="250" height="500">
+			<br>
+			<i>Remove a product</i>
+		</td>
+	</tr>
+</table>
 
-## Complaints received
-<img src="/deleteme/download8.jpeg" width="250" height="500">
-
-## Orders received
-<img src="/deleteme/download9.jpeg" width="250" height="500">
-
-## Add a new product
-<img src="/deleteme/download10.jpeg" width="250" height="500">
-
-## Remove a product
-<img src="/deleteme/download11.jpeg" width="250" height="500">
-
-## Creating a new Service provider account (Administrator)
-<img src="/deleteme/download12.jpeg" width="250" height="500">
-<img src="/deleteme/download13.jpeg" width="250" height="500">
+### Creating a new Service provider account (Administrator)
+<table>
+	<tr>
+		<td><img src="/deleteme/download12.jpeg" width="250" height="500"></td>
+		<td><img src="/deleteme/download13.jpeg" width="250" height="500"></td>
+	</tr>
+</table>
