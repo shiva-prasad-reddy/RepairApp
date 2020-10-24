@@ -1,5 +1,5 @@
 # RepairApp
-RepairApp is an android application which provides home services, where customers can book a service professional through app based on thier locality and reviews. The application also provides a platform to service providers to sell their custom built local goods.
+RepairApp is an android application which provides home services, where customers can book a service professional through the app based on their locality and reviews. The application also provides a platform to service providers to sell their custom built local goods.
 
 > Firebase, Android
 
